@@ -28,7 +28,7 @@ const SearchPage = () => {
 
         {/* Pagination  */}
         <footer className=" mt-4">
-            <Pagination totalPages={2} currentPage={1} onPageChage={1}/>
+            <Pagination totalPages={1} currentPage={0} onPageChage={0}/>
         </footer>
     </div> );
 }
