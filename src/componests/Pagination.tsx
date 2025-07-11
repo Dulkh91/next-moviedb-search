@@ -14,7 +14,7 @@ const Pagination = ({ totalPages, currentPage, onPageChage }:Props) => {
           ${currentPage === 1 ? "opacity-30 pointer-events-none" : ""}
         `}
           onClick={() => {
-            if (currentPage !== 1) onPageChage(currentPage - 1);
+            // if (currentPage !== 1) onPageChage(currentPage - 1);
           }}
         >
           <svg
@@ -37,7 +37,7 @@ const Pagination = ({ totalPages, currentPage, onPageChage }:Props) => {
           <li
             key={i}
             className={`flex items-center justify-center px-4 h-10 leading-tight hover:bg-blue-400 hover:text-white cursor-pointer ${currentPage === i + 1 ? "bg-blue-500 text-white" : ""}`}
-            onClick={() => onPageChage(i + 1)}
+            // onClick={() => onPageChage(i + 1)}
           >
             {i + 1}
           </li>
@@ -47,7 +47,7 @@ const Pagination = ({ totalPages, currentPage, onPageChage }:Props) => {
           ${currentPage === totalPages ? "opacity-30 pointer-events-none" : ""}
         `}
           onClick={() => {
-            if (currentPage < totalPages) onPageChage(currentPage + 1);
+            // if (currentPage < totalPages) onPageChage(currentPage + 1);
           }}
         >
           <svg
