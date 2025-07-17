@@ -12,9 +12,10 @@ export const useMovie = (query = "", page = "1", type: string) => {
 
   if (type === "search") {
     const trimmedQuery = query.trim();
-    endpoint = trimmedQuery.length > 0
-      ? `/api/movie?type=search&query=${trimmedQuery}&page=${page}`
-      : null;
+    endpoint =
+      trimmedQuery.length > 0
+        ? `/api/movie?type=search&query=${trimmedQuery}&page=${page}`
+        : null;
   } else {
     endpoint = `/api/movie?page=${page}`;
   }
