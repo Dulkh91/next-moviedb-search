@@ -4,12 +4,12 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol:"https",
-        hostname:'image.tmdb.org',
+        protocol: "https",
+        hostname: "image.tmdb.org",
         // pathname: '/t/p/w500/**'
-      }
+      },
     ],
-    domains: ['static.vecteezy.com']//for no image,
+    domains: ["static.vecteezy.com"], //for no image,
   },
 };
 

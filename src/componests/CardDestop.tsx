@@ -1,35 +1,39 @@
-'use client'
+"use client";
 import { Suspense } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { Spin, Progress} from "antd";
+import { Spin, Progress } from "antd";
 
-const RateStar = dynamic(() => import("@/componests/RateStar"),{ssr:false});
+const RateStar = dynamic(() => import("@/componests/RateStar"), { ssr: false });
 
 type Props = {
   src: string;
   title: string;
   releaseDate: string;
-  overview:string;
-vote_average?: number ;
-vote_count?: number;
-
+  overview: string;
+  vote_average?: number;
+  vote_count?: number;
 };
 
-
-const CardDesktop = ({ src,title, releaseDate,overview,vote_average,vote_count }: Props) => {
-  
-    return (
-    <div className=" shadow max-w-[451px] relative">
+const CardDesktop = ({
+  src,
+  title,
+  releaseDate,
+  overview,
+  vote_average,
+  vote_count,
+}: Props) => {
+  return (
+    <div className=" shadow max-w-[451px] relative" id="card_desktop">
       <div className=" flex gap-2">
         <div className="shrink-0  w-[183px] h-[281px] relative">
-            <Image src={src} 
-            alt={title} 
+          <Image
+            src={src}
+            alt={title}
             fill
             sizes="183px"
             className="object-cover"
-            />
-            
+          />
         </div>
 
         <div className="flex-row-1 m-3">
@@ -52,26 +56,30 @@ const CardDesktop = ({ src,title, releaseDate,overview,vote_average,vote_count }
             {/* Stars */}
 
             {vote_average && (
-                <div className=" flex mt-2 items-center whitespace-nowrap">
-              <Suspense fallback={<Spin size="small"/>}>
-                <RateStar vote_average={vote_average} />
-              </Suspense>
-            </div>
+              <div className=" flex mt-2 items-center whitespace-nowrap">
+                <Suspense fallback={<Spin size="small" />}>
+                  <RateStar vote_average={vote_average} />
+                </Suspense>
+              </div>
             )}
-
           </div>
         </div>
       </div>
 
-        {/* Progress */}
-       {vote_count &&(
+      {/* Progress */}
+      {vote_count && (
         <div className=" absolute top-2 right-2">
-            <Progress type="circle" percent={vote_count} size={30} format={(percent)=> `${percent}`} strokeColor={'#E9D100'} />
+          <Progress
+            type="circle"
+            percent={vote_count}
+            size={30}
+            format={(percent) => `${percent}`}
+            strokeColor={"#E9D100"}
+          />
         </div>
-       )}
-
+      )}
     </div>
-  );;
-}
- 
+  );
+};
+
 export default CardDesktop;

@@ -1,5 +1,5 @@
 // types/api.ts ឬដាក់នៅក្នុង file ណាមួយដែលអ្នកចង់
-import { Movie } from './movie'; // Import Movie interface ដែលបានកំណត់ខាងលើ
+import { Movie } from "./movie"; // Import Movie interface ដែលបានកំណត់ខាងលើ
 
 export interface MovieApiResponse {
   page: number;

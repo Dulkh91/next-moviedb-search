@@ -1,16 +1,18 @@
 @import "tailwindcss";
-body{
+body {
   background-color: #f7f7f7;
 }
 
-@layer base{
-  
+@layer base {
 }
 
 .custom-rate li {
-  margin-right: 3px !important; 
+  margin-right: 3px !important;
 }
 .ant-tabs-nav {
   display: flex !important;
   justify-content: center;
+}
+.pagination-custom {
+  margin-bottom: 10px !important;
 }
