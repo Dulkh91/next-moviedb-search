@@ -1,28 +1,33 @@
 "use client";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { Pagination} from "antd";
+import { Pagination } from "antd";
 import { useMovie } from "@/hooks/useMovie";
-import { useEffect } from "react";
+import { useEffect} from "react";
 
 const PaginationPage = () => {
   const searchParams = useSearchParams()!; //Or as ReadonlyURLSearchParams;
   const router = useRouter();
   const pathname = usePathname()!;
   const pageInitail = parseInt(searchParams.get("page") || "1");
-  const queryInitail = searchParams.get('query') || ''
-  const type = pathname.includes('search')? 'search': 'discover'
-  
+  const queryInitail = searchParams.get("query") || "";
+  const type = pathname.includes("search") ? "search" : "discover";
+ 
+
+  const { data, isValidating ,isLoading} = useMovie(
+    queryInitail,
+    String(pageInitail),
+    String(type),
+  );
+
   
 
-  const { data,isValidating } = useMovie(queryInitail, String(pageInitail),String(type));
-
-  useEffect(()=>{
-    if (!queryInitail && searchParams.has("page")) {
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete("page");
-    router.push(`${pathname}?${params.toString()}`);
-  }
-  },[queryInitail])
+  useEffect(() => {
+    if (!queryInitail && searchParams.has("page"),isLoading) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("page");
+      router.push(`${pathname}?${params.toString()}`);
+    }
+  }, [queryInitail]);
 
 
   if (isValidating || !data) {
@@ -32,7 +37,7 @@ const PaginationPage = () => {
       </div>
     );
   }
-  
+
 
   const handleChangePage = (newPage: number) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -41,9 +46,7 @@ const PaginationPage = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-
   return (
-
     <div className=" flex justify-center">
       <Pagination
         total={data.total_results}
@@ -53,11 +56,10 @@ const PaginationPage = () => {
         showSizeChanger={false}
         disabled={isValidating}
         align="center"
-        className={`${(data.total_pages <2)? "invisible":"" }`}
+        className={`${data.total_pages < 2 ? "invisible" : ""}`}
       />
-    
+     
     </div>
-   
   );
 };
 

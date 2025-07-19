@@ -3,11 +3,11 @@ import { ReactNode } from "react";
 const layoutSearch = ({
   children,
   searchmovie,
-  paginationsearching
+  paginationsearching,
 }: {
   children: ReactNode;
   searchmovie: ReactNode;
-  paginationsearching: ReactNode
+  paginationsearching: ReactNode;
 }) => {
   return (
     <div className=" space-y-5">

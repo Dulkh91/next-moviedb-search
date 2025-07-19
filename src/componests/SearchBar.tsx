@@ -1,7 +1,12 @@
 "use client";
 import debounce from "lodash/debounce";
 import { Flex, Input } from "antd";
-import { useSearchParams, useRouter, usePathname, ReadonlyURLSearchParams } from "next/navigation";
+import {
+  useSearchParams,
+  useRouter,
+  usePathname,
+  ReadonlyURLSearchParams,
+} from "next/navigation";
 import { useEffect, useState, useMemo } from "react";
 
 const SearchBar = () => {
@@ -13,15 +18,16 @@ const SearchBar = () => {
   const [inputValue, setInputValue] = useState(initialQuery);
 
   // ✅ debounce wrapped function
-  const debouncedSearch = useMemo(() =>
-    debounce((value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        const params = new URLSearchParams(searchParams.toString());
 
-      params.set("query", value);
-      router.push(`${pathname}?${params.toString()}`)
-    
-    }, 500)
-  , [searchParams, pathname]);
+        params.set("query", value);
+        router.push(`${pathname}?${params.toString()}`);
+      }, 500),
+    [searchParams, pathname],
+  );
 
   // ✅ debounce logic separated in effect
   useEffect(() => {
@@ -41,10 +47,6 @@ const SearchBar = () => {
 };
 
 export default SearchBar;
-
-
-
-
 
 /*
 
