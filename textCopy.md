@@ -1,12 +1,8 @@
-"use client";
-import debounce from "lodash/debounce";
-import { Flex, Input } from "antd";
-import { useSearchParams, useRouter, usePathname, ReadonlyURLSearchParams } from "next/navigation";
-import { useEffect, useState, useMemo } from "react";
-
+## To do note somethink
+```tsx
 const SearchBar = () => {
   const router = useRouter();
-  const searchParams = useSearchParams() as ReadonlyURLSearchParams;
+  const searchParams = useSearchParams();
   const pathname = usePathname();
 
   const initialQuery = searchParams.get("query") || "";
@@ -16,10 +12,12 @@ const SearchBar = () => {
   const debouncedSearch = useMemo(() =>
     debounce((value: string) => {
       const params = new URLSearchParams(searchParams.toString());
-
-      params.set("query", value);
-      router.push(`${pathname}?${params.toString()}`)
-    
+      if (value) {
+        params.set("query", value);
+      } else {
+        params.delete("query");
+      }
+      router.push(`${pathname}?${params.toString()}`);
     }, 500)
   , [searchParams, pathname]);
 
@@ -28,32 +26,21 @@ const SearchBar = () => {
     debouncedSearch(inputValue);
     return debouncedSearch.cancel; // cleanup
   }, [inputValue, debouncedSearch]);
-
-  return (
+  
+   return (
     <Flex>
       <Input
         placeholder="Type to search"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
+        allowClear
       />
     </Flex>
   );
 };
-
-export default SearchBar;
-
+```
 
 
 
 
-/*
-
- if (value) {
-        params.set("query", value);
-      } else {
-        params.delete("query");
-      }
-      router.push(`${pathname}?${params.toString()}`);
-
-
-*/
+## paginaton 

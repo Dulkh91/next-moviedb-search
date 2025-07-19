@@ -1,19 +1,21 @@
-'use client'
+"use client";
 import { ReactNode } from "react";
 const layoutSearch = ({
-    children, 
-    searchmovie
-}:{
-    children: ReactNode;
-    searchmovie: ReactNode
-}
+  children,
+  searchmovie,
+  paginationsearching
+}: {
+  children: ReactNode;
+  searchmovie: ReactNode;
+  paginationsearching: ReactNode
+}) => {
+  return (
+    <div className=" space-y-5">
+      <div>{children}</div>
+      <div>{searchmovie}</div>
+      <div>{paginationsearching}</div>
+    </div>
+  );
+};
 
-) => {
-    return ( <div className=" space-y-5">
-        <div>{children}</div>
-        <div>{searchmovie}</div>
-        {/* Add to pagination */}
-    </div> );
-}
- 
 export default layoutSearch;

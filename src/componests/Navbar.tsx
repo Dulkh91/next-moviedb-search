@@ -10,7 +10,7 @@ const items = [
     label: "Search",
   },
   {
-    key: "/rated",
+    key: "home/rated",
     label: "Rated",
   },
 ];
