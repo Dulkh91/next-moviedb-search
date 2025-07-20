@@ -6,11 +6,15 @@ import { useEffect, useState } from "react";
 
 const items = [
   {
+    key: "/",
+    label: "Home",
+  },
+  {
     key: "/search",
     label: "Search",
   },
   {
-    key: "home/rated",
+    key: "/rated",
     label: "Rated",
   },
 ];

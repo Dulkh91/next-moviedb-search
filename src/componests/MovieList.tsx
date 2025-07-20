@@ -1,7 +1,7 @@
 "use client";
 import { Movie } from "@/types/movie";
 import { defaultImage } from "@/lips/defaultImage";
-import { Spin, Flex, Alert } from "antd";
+import { Spin, Flex, Alert,FloatButton } from "antd";
 import dynamic from "next/dynamic";
 import { useMovie } from "@/hooks/useMovie";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
@@ -92,6 +92,9 @@ const MovieList = () => {
           </div>
         </Flex>
       </div>
+    <FloatButton.Group shape="circle">
+        <FloatButton.BackTop visibilityHeight={400} />
+    </FloatButton.Group>
     </>
   );
 };

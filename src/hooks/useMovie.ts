@@ -6,7 +6,7 @@ const fetcher = async (url: string) => {
   return res.json();
 };
 
-export const useMovie = (query = "", page = "1", type: string) => {
+export const useMovie = (query:string, page:string, type: string) => {
   // ✅ បង្កើត URL ដោយស្រាវជ្រាវលើ condition
   let endpoint: string | null = null;
 

@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { useMovie } from "@/hooks/useMovie";
 import { Movie } from "@/types/movie";
-import { Alert, Skeleton, Flex } from "antd";
+import { Alert, Skeleton, Flex,FloatButton } from "antd";
 import noImage from "../../public/noImage.svg";
 const CardDesktop = dynamic(() => import("@/componests/CardDestop"), {
   ssr: false,
@@ -15,10 +15,14 @@ const CardMobile = dynamic(() => import("@/componests/CardMobile"), {
 const MovieSearchPage = () => {
   const searchParams = useSearchParams() as ReadonlyURLSearchParams;
   const query = searchParams.get("query") || "";
-  const type = searchParams.get("search") || "search";
   const page = searchParams.get("page") || "1";
+  // const type = pathname.includes("search") ? "search" : "discover";
+  const { data, isLoading, error } = useMovie(
+    query, 
+    page, 
+    query?'search':'discover'//កំណត់ថា type ប្រសិនបើ query មិនបានបញ្ចូលទិន្ន័យផ្ទេទៅ discover
+  );
 
-  const { data, isLoading, error } = useMovie(query, page, type);
   if (isLoading) {
     return <Skeleton active />;
   }
@@ -28,7 +32,8 @@ const MovieSearchPage = () => {
   }
   const base_url = process.env.NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL;
 
-  if (!query || isLoading || !data || data.results.length === 0) {
+  //(!query || isLoading || !data || data.results.length === 0) 
+  if (isLoading || !data || data.results.length === 0) {
     return (
       <Alert
         message="There are no movies that matched your query."
@@ -89,6 +94,10 @@ const MovieSearchPage = () => {
             })}
         </div>
       </Flex>
+      {/* Go Top */}
+      <FloatButton.Group shape="circle">
+        <FloatButton.BackTop visibilityHeight={400} />
+    </FloatButton.Group>
     </>
   );
 };

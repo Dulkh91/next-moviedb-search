@@ -2,7 +2,7 @@
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { Pagination } from "antd";
 import { useMovie } from "@/hooks/useMovie";
-import { useEffect} from "react";
+import { useEffect } from "react";
 
 const PaginationPage = () => {
   const searchParams = useSearchParams()!; //Or as ReadonlyURLSearchParams;
@@ -10,25 +10,21 @@ const PaginationPage = () => {
   const pathname = usePathname()!;
   const pageInitail = parseInt(searchParams.get("page") || "1");
   const queryInitail = searchParams.get("query") || "";
-  const type = pathname.includes("search") ? "search" : "discover";
- 
+  // const type = pathname.includes("search") ? "search" : "discover";
 
-  const { data, isValidating ,isLoading} = useMovie(
+  const { data, isValidating, isLoading } = useMovie(
     queryInitail,
     String(pageInitail),
-    String(type),
+    queryInitail?'search':'discover'
   );
 
-  
-
   useEffect(() => {
-    if (!queryInitail && searchParams.has("page"),isLoading) {
+    if ((!queryInitail && searchParams.has("page"), isLoading)) {
       const params = new URLSearchParams(searchParams.toString());
       params.delete("page");
       router.push(`${pathname}?${params.toString()}`);
     }
   }, [queryInitail]);
-
 
   if (isValidating || !data) {
     return (
@@ -37,7 +33,6 @@ const PaginationPage = () => {
       </div>
     );
   }
-
 
   const handleChangePage = (newPage: number) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -58,7 +53,6 @@ const PaginationPage = () => {
         align="center"
         className={`${data.total_pages < 2 ? "invisible" : ""}`}
       />
-     
     </div>
   );
 };
