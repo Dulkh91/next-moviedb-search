@@ -15,7 +15,7 @@ const PaginationPage = () => {
   const { data, isValidating, isLoading } = useMovie(
     queryInitail,
     String(pageInitail),
-    queryInitail?'search':'discover'
+    queryInitail ? "search" : "discover",
   );
 
   useEffect(() => {

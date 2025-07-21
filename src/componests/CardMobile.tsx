@@ -2,6 +2,9 @@ import Image from "next/image";
 import { Suspense } from "react";
 import RateStar from "./RateStar";
 import { Spin, Progress } from "antd";
+import dynamic from "next/dynamic";
+
+const GengresPage = dynamic(()=>import('@/componests/Gengres'),{ssr:false})
 
 type Props = {
   src: string;
@@ -10,6 +13,7 @@ type Props = {
   overview: string;
   vote_average?: number;
   vote_count?: number;
+  genres: number[]
 };
 
 const CardMobile = ({
@@ -19,6 +23,7 @@ const CardMobile = ({
   overview,
   vote_average,
   vote_count,
+  genres
 }: Props) => {
   return (
     <div className=" shadow max-w-[451px] relative" id="card_mobile">
@@ -37,13 +42,9 @@ const CardMobile = ({
             <div>
               <h1 className="text-5 font-semibold">{title}</h1>
               <p className="text-gray-500 text-xs mb-2">{releaseDate} </p>
+              {/* Genres button */}
               <div className=" space-x-3">
-                <span className="border border-gray-200 py-1 px-2 bg-gray-100 text-xs rounded cursor-pointer">
-                  Action
-                </span>
-                <span className="border  border-gray-200 py-1 px-2 bg-gray-100 text-xs rounded cursor-pointer">
-                  Drama
-                </span>
+                <GengresPage genres_id={genres}/>
               </div>
             </div>
           </div>

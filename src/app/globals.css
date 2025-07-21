@@ -4,6 +4,7 @@ body {
 }
 
 @layer base {
+  
 }
 
 .custom-rate li {
@@ -15,4 +16,20 @@ body {
 }
 .pagination-custom {
   margin-bottom: 10px !important;
+}
+.float_btn-edit{
+   margin-right: 100px;
+}
+
+/* mobile */
+@media only screen and (max-width: 767px) {
+  .float_btn-edit{
+   margin-right: 1px;
+  }
+}
+/* media tablete */
+@media only screen and (min-width: 768px) and (max-width: 1119px) {
+  .float_btn-edit{
+   margin-right: 10px;
+  }
 }

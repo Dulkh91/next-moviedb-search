@@ -1,7 +1,7 @@
 "use client";
 import { Movie } from "@/types/movie";
-import { defaultImage } from "@/lips/defaultImage";
-import { Spin, Flex, Alert,FloatButton } from "antd";
+import { defaultImage } from "@/lip/defaultImage";
+import { Spin, Flex, Alert, FloatButton } from "antd";
 import dynamic from "next/dynamic";
 import { useMovie } from "@/hooks/useMovie";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
@@ -35,7 +35,7 @@ const MovieList = () => {
   if (!data.results?.length) {
     return <Alert message="គ្មានភាពយន្តទេ" type="info" />;
   }
-
+  // console.log(data);
   return (
     <>
       <div
@@ -61,6 +61,7 @@ const MovieList = () => {
                     releaseDate={movie.release_date}
                     overview={movie.overview}
                     src={imageUrl}
+                    genres={movie.genre_ids}
                     //    vote_average={movie.vote_average}
                   />
                 );
@@ -85,6 +86,7 @@ const MovieList = () => {
                     releaseDate={movie.release_date}
                     overview={movie.overview}
                     src={imageUrl}
+                    genres={movie.genre_ids}
                     //   vote_average={movie.vote_average}
                   />
                 );
@@ -92,9 +94,9 @@ const MovieList = () => {
           </div>
         </Flex>
       </div>
-    <FloatButton.Group shape="circle">
+      <FloatButton.Group shape="circle" className="float_btn-edit">
         <FloatButton.BackTop visibilityHeight={400} />
-    </FloatButton.Group>
+      </FloatButton.Group>
     </>
   );
 };
