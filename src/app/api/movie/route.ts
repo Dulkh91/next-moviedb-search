@@ -15,7 +15,8 @@ export const GET = async (req: NextRequest) => {
   // Access API by code
   const clientApiKey = process.env.NEXT_PUBLIC_CLIENT_WEB_URL;
   const apiKey = process.env.API_KEY;
-  const token = process.env.TOKEN_KEY;
+  const token = process.env.NEXT_PUBLIC_CLIENT_TOKEN_KEY;
+  
 
   if (!clientApiKey || !apiKey || !token) {
     return NextResponse.json({ error: "Resource not found" }, { status: 500 });

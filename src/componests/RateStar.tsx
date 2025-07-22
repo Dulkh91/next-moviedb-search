@@ -1,6 +1,5 @@
 "use client";
 import { Rate } from "antd";
-import {rateMovie } from '@/lip/tmdb'
 
 type Props = {
   vote_average: number;

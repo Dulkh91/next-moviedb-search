@@ -1,7 +1,7 @@
 export const getData = async () => {
   const clientApiKey = process.env.NEXT_PUBLIC_CLIENT_WEB_URL;
   const apiKey = process.env.API_KEY;
-  const token = process.env.TOKEN_KEY;
+  const token = process.env.NEXT_PUBLIC_CLIENT_TOKEN_KEY;
 
   if (!clientApiKey || !apiKey || !token) {
     console.error("Missing environment variables for client-side fetch.");

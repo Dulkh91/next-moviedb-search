@@ -3,9 +3,12 @@ import { Suspense } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Spin, Progress } from "antd";
+import VoteStar from "./VoteStar";
 
 const RateStar = dynamic(() => import("@/componests/RateStar"), { ssr: false });
-const GengresPage = dynamic(()=> import("@/componests/Gengres"), {ssr: false})
+const GengresPage = dynamic(() => import("@/componests/Gengres"), {
+  ssr: false,
+});
 
 type Props = {
   src: string;
@@ -14,7 +17,8 @@ type Props = {
   overview: string;
   vote_average?: number;
   vote_count?: number;
-  genres: number[]
+  genres: number[];
+  movieId?: string;
 };
 
 const CardDesktop = ({
@@ -24,7 +28,8 @@ const CardDesktop = ({
   overview,
   vote_average,
   vote_count,
-  genres
+  genres,
+  movieId
 }: Props) => {
   return (
     <div className=" shadow max-w-[451px] relative" id="card_desktop">
@@ -45,7 +50,7 @@ const CardDesktop = ({
             <p className="text-gray-500 text-xs mb-2">{releaseDate} </p>
             {/* Gengre */}
             <div className=" flex flex-wrap gap-1">
-              <GengresPage genres_id={genres}/>
+              <GengresPage genres_id={genres} />
             </div>
 
             <p className="text-xs mt-2 text-gray-700 line-clamp-6 text-wrap">
@@ -61,6 +66,16 @@ const CardDesktop = ({
                 </Suspense>
               </div>
             )}
+            {/* Star vote rate */}
+            {movieId &&(
+              <div className=" flex mt-2 items-center whitespace-nowrap">
+                <Suspense fallback={<Spin size="small" />}>
+                  <VoteStar movieId={movieId} />
+                </Suspense>
+              </div>
+            )}
+
+ 
           </div>
         </div>
       </div>

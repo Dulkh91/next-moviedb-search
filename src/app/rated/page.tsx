@@ -1,10 +1,9 @@
 'use client'
-import VoteStar from "@/componests/VoteStar";
-const RatedPage = () => {
-    return ( <>
-        <p>hello page rate</p>
-        <VoteStar movieId={123} initialRating={0}  />
-    </> );
-}
- 
-export default RatedPage;
+import dynamic from "next/dynamic";
+const RatedPage = dynamic(()=>import("@/componests/RatedPage"),{ssr: false})
+n
+const RatingPage = () => {
+    return <RatedPage/>
+};
+
+export default RatingPage;
