@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { Skeleton } from "antd";
-const MovieSearchPage = dynamic(() => import("@/componests/MovieSeach"), {
+const MovieSearchPage = dynamic(() => import("@/componests/pages/MovieSeach"), {
   ssr: false,
   loading: () => <Skeleton active />,
 });

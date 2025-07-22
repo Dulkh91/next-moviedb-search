@@ -1,10 +1,10 @@
-'use client'
+"use client";
 import dynamic from "next/dynamic";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { useMovie } from "@/hooks/useMovie";
 import { Movie } from "@/types/movie";
 import { Alert, Skeleton, Flex, FloatButton } from "antd";
-import noImage from "../../public/noImage.svg";
+import noImage from "../../../public/noImage.svg";
 import useGuestSession from "@/hooks/useGuestSession";
 import { useWindowSize } from "@/hooks/useWindow";
 
@@ -15,11 +15,10 @@ const CardMobile = dynamic(() => import("@/componests/CardMobile"), {
   ssr: false,
 });
 
-
 const RatedPage = () => {
-useGuestSession()
-const { width } = useWindowSize()
-const searchParams = useSearchParams() as ReadonlyURLSearchParams;
+  useGuestSession();
+  const { width } = useWindowSize();
+  const searchParams = useSearchParams() as ReadonlyURLSearchParams;
   const query = searchParams.get("query") || "";
   const page = searchParams.get("page") || "1";
   // const type = pathname.includes("search") ? "search" : "discover";
@@ -67,26 +66,33 @@ const searchParams = useSearchParams() as ReadonlyURLSearchParams;
 
           // Render CardMobile for mobile devices, otherwise render CardDesktop
           return isMobile ? (
-            <div key={movie.id}> {/* Full width on mobile, hidden on desktop */}
+            <div key={movie.id}>
+              {" "}
+              {/* Full width on mobile, hidden on desktop */}
               <CardMobile
                 title={movie.title}
                 releaseDate={movie.release_date}
                 genres={movie.genre_ids}
                 overview={movie.overview}
                 src={imageUrl}
-                vote_count={movie.vote_count}
+                vote_count={movie.vote_average}
                 movieId={String(movie.id)}
               />
             </div>
           ) : (
-            <div key={movie.id} className="flex flex-col mt-5 gap-5 duration-300 mx-auto" > {/* Hidden on mobile, specific widths on desktop */}
+            <div
+              key={movie.id}
+              className="flex flex-col mt-5 gap-5 duration-300 mx-auto"
+            >
+              {" "}
+              {/* Hidden on mobile, specific widths on desktop */}
               <CardDesktop
                 title={movie.title}
                 releaseDate={movie.release_date}
                 genres={movie.genre_ids}
                 overview={movie.overview}
                 src={imageUrl}
-                vote_count={movie.vote_count}
+                vote_count={movie.vote_average}
                 movieId={String(movie.id)}
               />
             </div>
@@ -99,8 +105,6 @@ const searchParams = useSearchParams() as ReadonlyURLSearchParams;
       </FloatButton.Group>
     </>
   );
-
 };
 
 export default RatedPage;
-

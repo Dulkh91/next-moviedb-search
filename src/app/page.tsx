@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { Skeleton, Flex } from "antd";
 
-const MovieList = dynamic(() => import("@/componests/MovieList"), {
+const MovieList = dynamic(() => import("@/componests/pages/MovieList"), {
   loading: () => <Skeleton active />,
 });
 const PaginationPage = dynamic(() => import("@/componests/Pagination"), {

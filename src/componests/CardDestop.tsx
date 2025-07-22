@@ -2,13 +2,16 @@
 import { Suspense } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { Spin, Progress } from "antd";
+import { Spin } from "antd";
 import VoteStar from "./VoteStar";
 
 const RateStar = dynamic(() => import("@/componests/RateStar"), { ssr: false });
 const GengresPage = dynamic(() => import("@/componests/Gengres"), {
   ssr: false,
 });
+const ProgressRateColor = dynamic(()=>import('@/componests/ProgressRateColor'),{
+  ssr:false
+})
 
 type Props = {
   src: string;
@@ -29,8 +32,10 @@ const CardDesktop = ({
   vote_average,
   vote_count,
   genres,
-  movieId
+  movieId,
 }: Props) => {
+
+  
   return (
     <div className=" shadow max-w-[451px] relative" id="card_desktop">
       <div className=" flex gap-2">
@@ -46,8 +51,9 @@ const CardDesktop = ({
 
         <div className="flex-row-1 m-3">
           <div>
-            <h1 className="text-5 font-semibold w-11/12">{title}</h1>
+            <h1 className="text-5 font-semibold mr-6">{title}</h1>
             <p className="text-gray-500 text-xs mb-2">{releaseDate} </p>
+
             {/* Gengre */}
             <div className=" flex flex-wrap gap-1">
               <GengresPage genres_id={genres} />
@@ -58,37 +64,33 @@ const CardDesktop = ({
             </p>
 
             {/* Stars */}
-
-            {vote_average && (
+            {typeof vote_average === 'number' &&(
               <div className=" flex mt-2 items-center whitespace-nowrap">
                 <Suspense fallback={<Spin size="small" />}>
-                  <RateStar vote_average={vote_average} />
+                  <RateStar vote_average={vote_average || 0} />
                 </Suspense>
-              </div>
-            )}
+              </div>)
+            }
+              
+          
             {/* Star vote rate */}
-            {movieId &&(
+            {movieId && (
               <div className=" flex mt-2 items-center whitespace-nowrap">
                 <Suspense fallback={<Spin size="small" />}>
                   <VoteStar movieId={movieId} />
                 </Suspense>
               </div>
             )}
-
- 
           </div>
         </div>
       </div>
 
       {/* Progress */}
-      {vote_count && (
+      {typeof vote_count === 'number' &&(
         <div className=" absolute top-2 right-2">
-          <Progress
-            type="circle"
-            percent={vote_count}
-            size={30}
-            format={(percent) => `${percent}`}
-            strokeColor={"#E9D100"}
+          {/* votepropress */}
+          <ProgressRateColor 
+            rating={vote_count || 0}
           />
         </div>
       )}

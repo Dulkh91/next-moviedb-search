@@ -3,8 +3,8 @@ import dynamic from "next/dynamic";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { useMovie } from "@/hooks/useMovie";
 import { Movie } from "@/types/movie";
-import { Alert, Skeleton, Flex, FloatButton } from "antd";
-import noImage from "../../public/noImage.svg";
+import { Alert, Skeleton, Flex, FloatButton} from "antd";
+import noImage from "../../../public/noImage.svg";
 const CardDesktop = dynamic(() => import("@/componests/CardDestop"), {
   ssr: false,
 });
@@ -56,7 +56,6 @@ const MovieSearchPage = () => {
               const imageUrl = movie.poster_path
                 ? `${base_url}${movie.poster_path}`
                 : noImage;
-
               return (
                 <CardDesktop
                   key={movie.id}
@@ -65,7 +64,7 @@ const MovieSearchPage = () => {
                   overview={movie.overview}
                   src={imageUrl}
                   vote_average={movie.vote_average}
-                  vote_count={movie.vote_count}
+                  vote_count={movie?.vote_average}
                   genres={movie.genre_ids}
                 />
               );
@@ -91,7 +90,7 @@ const MovieSearchPage = () => {
                   overview={movie.overview}
                   src={imageUrl}
                   vote_average={movie.vote_average}
-                  vote_count={movie.vote_count}
+                  vote_count={movie.vote_average}
                   genres={movie.genre_ids}
                 />
               );
