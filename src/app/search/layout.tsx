@@ -1,5 +1,5 @@
-"use client";
 import { ReactNode } from "react";
+
 const layoutSearch = ({
   children,
   searchmovie,
@@ -9,6 +9,7 @@ const layoutSearch = ({
   searchmovie: ReactNode;
   paginationsearching: ReactNode;
 }) => {
+  
   return (
     <div className=" space-y-5">
       <div>{children}</div>

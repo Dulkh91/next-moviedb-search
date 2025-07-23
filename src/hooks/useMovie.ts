@@ -1,5 +1,4 @@
 import useSWR from "swr";
-
 const fetcher = async (url: string) => {
   const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to fetch movie data");
@@ -22,11 +21,8 @@ export const useMovie = (query: string, page: string, type: string) => {
 
   // ✅ Call useSWR នៅទីតាំងតែមួយគត់
   const swrOptions =
-    type === "search"
-      ? { revalidateOnFocus: false }
-      : { keepPreviousData: true };
-
-  return useSWR(endpoint, fetcher, swrOptions);
+    type === "search" ? { revalidateOnFocus: false } : { keepPreviousData: true };
+    return useSWR(endpoint, fetcher, swrOptions);
 };
 
 //note.docs

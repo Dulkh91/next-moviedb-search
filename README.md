@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎬 MovieDB Search App
 
-## Getting Started
+A movie search and rating web application built using **Next.js 15**, **TypeScript**, and **Ant Design**, powered by [The Movie Database (TMDB) API](https://developer.themoviedb.org/).
 
-First, run the development server:
+🌐 Live demo: [https://next-moviedb-search.vercel.app](https://next-moviedb-search.vercel.app)
+
+---
+
+##  Features
+
+- 🔎 **Search Movies** by keyword with instant result and server-side pagination
+- ⭐ **Rate Movies** with 0.5 to 10 stars using a guest session
+- ❤️ **Rated Tab** to view all rated movies
+- 🎨 **Color-coded rating display** using circular progress indicators
+- 🧠 **Genre Tags** rendered from genre IDs via API
+- ⚙️ **Responsive Design** for both desktop and mobile
+- ⚡ **Debounced Search** input for better performance
+
+---
+
+## 🚀 Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/)
+- **Language**: TypeScript
+- **UI Library**: [Ant Design (antd)](https://ant.design/)
+- **HTTP Hook**: [SWR](https://swr.vercel.app/)
+- **API**: [The Movie Database (TMDB)](https://developer.themoviedb.org/)
+- **Utils**: Lodash, Prettier, ESLint, Husky
+
+---
+
+## 🏁 Getting Started
+
+### 1. Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Dulkh91/next-moviedb-search.git
+cd next-moviedb-search
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
+```bash
+npm install
+```
+### 3. Create .env.local
+```js
+# .env.local
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+API_KEY = your_tmdb_api_key
+NEXT_PUBLIC_CLIENT_TOKEN_KEY = your_bearer_v4_token
+NEXT_PUBLIC_CLIENT_WEB_URL = https://api.themoviedb.org/3
+NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL = https://image.tmdb.org/t/p/w500
+```
+---
+### 📦 Scripts
+```bash
+npm run dev       # Run in development
+npm run build     # Production build
+```
+---
+### 📁 Folder Structure
+``` bash
+/app
+  └── search      → Search Page
+  └── rated       → Rated Page
+  └── api         → API Route Handlers
+/components       → Reusable components
+/hooks            → Custom React hooks
+/types            → TypeScript interfaces
+/lip              → Utilities like rateMovie, guestSession
+```
+---
+### 🙏 Acknowledgements
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+[TMDB AP](https://developer.themoviedb.org/docs/getting-started)
 
-## Learn More
+[Ant Design](https://ant.design/)
 
-To learn more about Next.js, take a look at the following resources:
+[Next.js](https://nextjs.org/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
+### 📸 Screenshots
+![home alt](./public/image/home.png)
+![search atl](./public/image/search.png)
+![rated atl](./public/image/rated.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Author
+Created by <a href="https://github.com/Dulkh91"> Dulkh91 </a>

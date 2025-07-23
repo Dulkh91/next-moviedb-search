@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { useMovie } from "@/hooks/useMovie";
 import { Movie } from "@/types/movie";
-import { Alert, Skeleton, Flex, FloatButton} from "antd";
+import { Alert, Skeleton, Flex, FloatButton } from "antd";
 import noImage from "../../../public/noImage.svg";
 const CardDesktop = dynamic(() => import("@/componests/CardDestop"), {
   ssr: false,

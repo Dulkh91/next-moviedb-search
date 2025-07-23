@@ -1,18 +1,13 @@
-"use client";
-import dynamicImport from "next/dynamic";
-import { Skeleton } from "antd";
-import { Suspense } from "react";
 
-const SearchBar = dynamicImport(() => import("@/componests/SearchBar"), {
-  ssr: false,
-  loading: () => <Skeleton active />,
-});
+import ClientPageSearch from "./ClientPageSearch";
+export const metadata ={
+  title: 'search',
+  description:'Search page of movie search it can help to search search movie from themoviedb.'
+}
 
 const SearchPage = () => {
   return (
-    <Suspense>
-      <SearchBar />
-    </Suspense>
+      <ClientPageSearch />
   );
 };
 

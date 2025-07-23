@@ -9,9 +9,12 @@ const RateStar = dynamic(() => import("@/componests/RateStar"), { ssr: false });
 const GengresPage = dynamic(() => import("@/componests/Gengres"), {
   ssr: false,
 });
-const ProgressRateColor = dynamic(()=>import('@/componests/ProgressRateColor'),{
-  ssr:false
-})
+const ProgressRateColor = dynamic(
+  () => import("@/componests/ProgressRateColor"),
+  {
+    ssr: false,
+  },
+);
 
 type Props = {
   src: string;
@@ -34,8 +37,6 @@ const CardDesktop = ({
   genres,
   movieId,
 }: Props) => {
-
-  
   return (
     <div className=" shadow max-w-[451px] relative" id="card_desktop">
       <div className=" flex gap-2">
@@ -45,7 +46,8 @@ const CardDesktop = ({
             alt={title}
             fill
             sizes="183px"
-            className="object-cover"
+            className="object rounded transition-opacity duration-500 ease-in-out opacity-0"
+            onLoadingComplete={(img) => img.classList.remove("opacity-0")}
           />
         </div>
 
@@ -64,15 +66,14 @@ const CardDesktop = ({
             </p>
 
             {/* Stars */}
-            {typeof vote_average === 'number' &&(
+            {typeof vote_average === "number" && (
               <div className=" flex mt-2 items-center whitespace-nowrap">
                 <Suspense fallback={<Spin size="small" />}>
                   <RateStar vote_average={vote_average || 0} />
                 </Suspense>
-              </div>)
-            }
-              
-          
+              </div>
+            )}
+
             {/* Star vote rate */}
             {movieId && (
               <div className=" flex mt-2 items-center whitespace-nowrap">
@@ -86,12 +87,10 @@ const CardDesktop = ({
       </div>
 
       {/* Progress */}
-      {typeof vote_count === 'number' &&(
+      {typeof vote_count === "number" && (
         <div className=" absolute top-2 right-2">
           {/* votepropress */}
-          <ProgressRateColor 
-            rating={vote_count || 0}
-          />
+          <ProgressRateColor rating={vote_count || 0} />
         </div>
       )}
     </div>

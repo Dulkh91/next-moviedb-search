@@ -12,7 +12,7 @@ const ProgressRateColor = dynamic(
   () => import("@/componests/ProgressRateColor"),
   {
     ssr: false,
-  }
+  },
 );
 
 type Props = {
@@ -46,6 +46,8 @@ const CardMobile = ({
               layout="fill"
               alt="image"
               style={{ objectFit: "cover" }}
+              className="object rounded transition-opacity duration-500 ease-in-out opacity-0"
+            onLoadingComplete={(img) => img.classList.remove("opacity-0")}
             />
           </div>
 
@@ -53,7 +55,7 @@ const CardMobile = ({
             <div>
               <h1 className="text-5 font-semibold mr-2">{title}</h1>
               <p className="text-gray-500 text-xs mb-2">{releaseDate} </p>
-              
+
               {/* Genres button */}
               <div className="flex flex-wrap gap-1">
                 <GengresPage genres_id={genres} />
@@ -86,7 +88,7 @@ const CardMobile = ({
       </div>
 
       {/* Progress */}
-      {typeof vote_count === 'number' && (
+      {typeof vote_count === "number" && (
         <div className=" absolute top-2 right-2">
           <ProgressRateColor rating={vote_count || 0} />
         </div>
