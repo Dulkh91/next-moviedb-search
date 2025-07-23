@@ -1,7 +1,9 @@
- តើ null នៅក្នុង useSWR មានន័យអ្វី?
+តើ null នៅក្នុង useSWR មានន័យអ្វី?
+
 ```ts
 useSWR(shouldFetch ? `/api/movie?query=${query}&page=${page}` : null, fetcher);
 ```
+
 នេះមានន័យថា៖
 
 ប្រសិនបើ shouldFetch === true → វាធ្វើ fetch
@@ -26,9 +28,10 @@ const [searchTerm, setSearchTerm] = useState("");
 // បើអ្នកទើបបើក page ឬ form ទទេ, SWR មិនទាញ data ទេ
 const { data } = useSWR(
   searchTerm ? `/api/movie?query=${searchTerm}` : null,
-  fetcher
+  fetcher,
 );
 ```
+
 នេះជាការជៀសវាង request មិនចាំបាច់ ទៅកាន់ API ដំបូង ដោយ "query=return" ឬ "query=" ខ្សោយ។
 
 ✅ ការពិចារណាបន្ថែម
@@ -39,8 +42,9 @@ const { data } = useSWR(
 ```ts
 const safeQuery = query?.trim() || "return";
 ```
+
 📌 សង្ខេប
-Condition	Result
-useSWR(null, ...)	❌ មិន fetch ទេ (ត្រឹមត្រូវ)
-useSWR('/api/movie?...', ...)	✅ fetch
-null មិនបង្កើត error ឡើយ	✅ ប្រើបានសុវត្ថិភាព
+Condition Result
+useSWR(null, ...) ❌ មិន fetch ទេ (ត្រឹមត្រូវ)
+useSWR('/api/movie?...', ...) ✅ fetch
+null មិនបង្កើត error ឡើយ ✅ ប្រើបានសុវត្ថិភាព

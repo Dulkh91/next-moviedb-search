@@ -1,16 +1,16 @@
-'use client'
+"use client";
 import dynamicImport from "next/dynamic";
 import { Skeleton } from "antd";
 
-const SearchBar = dynamicImport(()=>import('@/componests/SearchBar'),{
-ssr:false,loading: () => <Skeleton active />,
-})
-
+const SearchBar = dynamicImport(() => import("@/componests/SearchBar"), {
+  ssr: false,
+  loading: () => <Skeleton active />,
+});
 
 const ClientPageSearch = () => {
-    return <SearchBar/>
-}
- 
+  return <SearchBar />;
+};
+
 export default ClientPageSearch;
 
 /*

@@ -21,8 +21,10 @@ export const useMovie = (query: string, page: string, type: string) => {
 
   // ✅ Call useSWR នៅទីតាំងតែមួយគត់
   const swrOptions =
-    type === "search" ? { revalidateOnFocus: false } : { keepPreviousData: true };
-    return useSWR(endpoint, fetcher, swrOptions);
+    type === "search"
+      ? { revalidateOnFocus: false }
+      : { keepPreviousData: true };
+  return useSWR(endpoint, fetcher, swrOptions);
 };
 
 //note.docs

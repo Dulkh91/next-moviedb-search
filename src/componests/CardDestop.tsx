@@ -46,6 +46,9 @@ const CardDesktop = ({
             alt={title}
             fill
             sizes="183px"
+            priority={true}
+            placeholder={'blur'}
+            blurDataURL={`${Image}`}
             className="object rounded transition-opacity duration-500 ease-in-out opacity-0"
             onLoadingComplete={(img) => img.classList.remove("opacity-0")}
           />

@@ -9,7 +9,6 @@ const layoutSearch = ({
   searchmovie: ReactNode;
   paginationsearching: ReactNode;
 }) => {
-  
   return (
     <div className=" space-y-5">
       <div>{children}</div>

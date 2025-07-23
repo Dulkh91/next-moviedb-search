@@ -17,10 +17,10 @@ export const metadata: Metadata = {
   title: {
     default: "movie searching",
     template: "%s | movie searching",
-    absolute: ""
+    absolute: "",
   },
   description: `To study about using api of tmdb for fetch api 
-  and search title movie and than using guestion-session for vote star`
+  and search title movie and than using guestion-session for vote star`,
 };
 
 export default function RootLayout({
@@ -30,7 +30,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

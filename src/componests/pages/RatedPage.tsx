@@ -96,7 +96,7 @@ const RatedPage = () => {
                 movieId={String(movie.id)}
               />
             </div>
-          )
+          );
         })}
       </Flex>
       {/* Float button for "Back to Top" functionality */}

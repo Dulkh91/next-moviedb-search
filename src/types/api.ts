@@ -7,5 +7,4 @@ export interface MovieApiResponse {
   total_results: number;
 }
 
-
-// It for main api 
+// It for main api

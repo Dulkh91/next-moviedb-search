@@ -6,7 +6,7 @@ A movie search and rating web application built using **Next.js 15**, **TypeScri
 
 ---
 
-##  Features
+## Features
 
 - 🔎 **Search Movies** by keyword with instant result and server-side pagination
 - ⭐ **Rate Movies** with 0.5 to 10 stars using a guest session
@@ -39,10 +39,13 @@ cd next-moviedb-search
 ```
 
 ### 2. Install dependencies
+
 ```bash
 npm install
 ```
+
 ### 3. Create .env.local
+
 ```js
 # .env.local
 
@@ -51,15 +54,21 @@ NEXT_PUBLIC_CLIENT_TOKEN_KEY = your_bearer_v4_token
 NEXT_PUBLIC_CLIENT_WEB_URL = https://api.themoviedb.org/3
 NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL = https://image.tmdb.org/t/p/w500
 ```
+
 ---
+
 ### 📦 Scripts
+
 ```bash
 npm run dev       # Run in development
 npm run build     # Production build
 ```
+
 ---
+
 ### 📁 Folder Structure
-``` bash
+
+```bash
 /app
   └── search      → Search Page
   └── rated       → Rated Page
@@ -69,7 +78,9 @@ npm run build     # Production build
 /types            → TypeScript interfaces
 /lip              → Utilities like rateMovie, guestSession
 ```
+
 ---
+
 ### 🙏 Acknowledgements
 
 [TMDB AP](https://developer.themoviedb.org/docs/getting-started)
@@ -79,10 +90,13 @@ npm run build     # Production build
 [Next.js](https://nextjs.org/)
 
 ---
+
 ### 📸 Screenshots
+
 ![home alt](./public/image/home.png)
 ![search atl](./public/image/search.png)
 ![rated atl](./public/image/rated.png)
 
 ## Author
+
 Created by <a href="https://github.com/Dulkh91"> Dulkh91 </a>

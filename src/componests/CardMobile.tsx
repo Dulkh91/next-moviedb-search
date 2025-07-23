@@ -12,7 +12,7 @@ const ProgressRateColor = dynamic(
   () => import("@/componests/ProgressRateColor"),
   {
     ssr: false,
-  },
+  }
 );
 
 type Props = {
@@ -43,11 +43,14 @@ const CardMobile = ({
           <div className=" relative shrink-0 w-[60px] h-[91px]">
             <Image
               src={src}
-              layout="fill"
+              fill
               alt="image"
-              style={{ objectFit: "cover" }}
+              priority={true}
+              placeholder={"blur"}
+              blurDataURL={`${Image}`}
+              // style={{ objectFit: "cover" }}
               className="object rounded transition-opacity duration-500 ease-in-out opacity-0"
-            onLoadingComplete={(img) => img.classList.remove("opacity-0")}
+              onLoadingComplete={(img) => img.classList.remove("opacity-0")}
             />
           </div>
 
