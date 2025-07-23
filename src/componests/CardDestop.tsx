@@ -4,6 +4,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Spin } from "antd";
 import VoteStar from "./VoteStar";
+import { useState } from "react";
 
 const RateStar = dynamic(() => import("@/componests/RateStar"), { ssr: false });
 const GengresPage = dynamic(() => import("@/componests/Gengres"), {
@@ -37,20 +38,24 @@ const CardDesktop = ({
   genres,
   movieId,
 }: Props) => {
+
+const [imageLoading, setImageLoading] = useState(false)
+
   return (
     <div className=" shadow max-w-[451px] relative" id="card_desktop">
       <div className=" flex gap-2">
-        <div className="shrink-0  w-[183px] h-[281px] relative">
+        <div className="shrink-0 relative w-[183px] h-[281] ">
           <Image
             src={src}
             alt={title}
             fill
-            sizes="183px"
-            priority={true}
-            placeholder={'blur'}
-            blurDataURL={`${Image}`}
-            className="object rounded transition-opacity duration-500 ease-in-out opacity-0"
-            onLoadingComplete={(img) => img.classList.remove("opacity-0")}
+            loading="lazy"
+            placeholder={"blur"}
+            blurDataURL={src}
+            className={`object-fit transition-opacity duration-500 ease-in-out ${imageLoading? 'opacity-100':'opacity-0'} `} 
+            onLoad={() => setImageLoading(true)}
+            // onLoadingComplete={(img) => img.classList.remove("opacity-0")}
+            sizes="(max-width: 768px) 183px, 183px"
           />
         </div>
 

@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { Spin } from "antd";
 import dynamic from "next/dynamic";
 import VoteStar from "./VoteStar";
+import { useState } from "react";
 
 const RateStar = dynamic(() => import("@/componests/RateStar"), { ssr: false });
 const GengresPage = dynamic(() => import("@/componests/Gengres"), {
@@ -12,7 +13,7 @@ const ProgressRateColor = dynamic(
   () => import("@/componests/ProgressRateColor"),
   {
     ssr: false,
-  }
+  },
 );
 
 type Props = {
@@ -36,21 +37,24 @@ const CardMobile = ({
   genres,
   movieId,
 }: Props) => {
+  const[imageLoading ,setImageLoading] = useState(false)
   return (
     <div className=" shadow max-w-[451px] relative" id="card_mobile">
       <div className=" m-2 p-2">
         <div className=" flex gap-2">
-          <div className=" relative shrink-0 w-[60px] h-[91px]">
+          <div className=" relative shrink-0 w-[60px] h-[90px]">
             <Image
               src={src}
               fill
-              alt="image"
-              priority={true}
+              alt={title}
+              loading="lazy"
               placeholder={"blur"}
-              blurDataURL={`${Image}`}
+              blurDataURL={src}
               // style={{ objectFit: "cover" }}
-              className="object rounded transition-opacity duration-500 ease-in-out opacity-0"
-              onLoadingComplete={(img) => img.classList.remove("opacity-0")}
+              className={`object-fit transition-opacity duration-500 ease-in-out ${imageLoading? 'opacity-100':'opacity-0'} `} 
+              onLoad={() => setImageLoading(true)}
+              sizes="(max-width: 768px) 60px, 60px"
+              
             />
           </div>
 
