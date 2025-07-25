@@ -1,10 +1,11 @@
 "use client";
 import { Movie } from "@/types/movie";
-import { defaultImage } from "@/lip/defaultImage";
 import { Spin, Flex, Alert, FloatButton } from "antd";
 import dynamic from "next/dynamic";
 import { useMovie } from "@/hooks/useMovie";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+import useGuestSession from "@/hooks/useGuestSession";
+import noImage from '../../public/noImage.svg'
 
 const CardDesktop = dynamic(() => import("@/componests/CardDestop"), {
   ssr: false,
@@ -14,6 +15,8 @@ const CardMobile = dynamic(() => import("@/componests/CardMobile"), {
 });
 
 const MovieList = () => {
+  useGuestSession();
+  
   const search = useSearchParams() as ReadonlyURLSearchParams;
   const page = search.get("page") || "1";
 
@@ -35,7 +38,6 @@ const MovieList = () => {
   if (!data.results?.length) {
     return <Alert message="គ្មានភាពយន្តទេ" type="info" />;
   }
-  // console.log(data);
   return (
     <>
       <div
@@ -52,7 +54,7 @@ const MovieList = () => {
               data.results.map((movie: Movie) => {
                 const imageUrl = movie.poster_path
                   ? `${base_url}${movie.poster_path}`
-                  : defaultImage;
+                  : noImage;
 
                 return (
                   <CardDesktop
@@ -77,7 +79,7 @@ const MovieList = () => {
               data.results.map((movie: Movie) => {
                 const imageUrl = movie.poster_path
                   ? `${base_url}${movie.poster_path}`
-                  : defaultImage;
+                  : noImage;
 
                 return (
                   <CardMobile

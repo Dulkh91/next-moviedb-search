@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import { useEffect, useState } from "react";
 
 const fetcher = ([url, token]: [string, string]) =>
   fetch(url, {
@@ -8,11 +9,24 @@ const fetcher = ([url, token]: [string, string]) =>
 export const useRated = () => {
   const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_WEB_URL;
   const TOKEN_KEY = process.env.NEXT_PUBLIC_CLIENT_TOKEN_KEY;
-  const GUEST_SESSION_ID = localStorage.getItem("quest_session_id");
+  const [guestSessionId, setGuestSessionId] = useState<string | null>(null);
 
-  const URL = `${BASE_URL}/guest_session/${GUEST_SESSION_ID}/rated/movies`;
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const guestId = localStorage.getItem("guest_session_id");
+      if (guestId){
+        setGuestSessionId(guestId);
+      } 
+    }
+  }, []);
 
-  const { data, isLoading } = useSWR([URL, TOKEN_KEY], fetcher);
+  const URL = guestSessionId && BASE_URL ? `${BASE_URL}/guest_session/${guestSessionId}/rated/movies` : null;
 
-  return { ratedData: data?.results || [], isLoading };
+  const { data, isLoading } = useSWR(URL && TOKEN_KEY ? [URL, TOKEN_KEY] : null, fetcher);
+  // Handle loading and error states
+  if (!URL || !TOKEN_KEY) return { ratedData: [], isLoading: true };  
+
+  if (isLoading || !data) return { ratedData: [], isLoading: true };
+  
+  return { ratedData: data || [], isLoading };
 };

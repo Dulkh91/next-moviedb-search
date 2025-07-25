@@ -14,4 +14,5 @@ export interface Movie {
   popularity: number;
   video: boolean;
   vote_count: number;
+  rating?: number; 
 }

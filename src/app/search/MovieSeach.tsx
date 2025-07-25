@@ -5,7 +5,6 @@ import { useMovie } from "@/hooks/useMovie";
 import { Movie } from "@/types/movie";
 import { Alert, Skeleton, Flex, FloatButton } from "antd";
 import noImage from "../../../public/noImage.svg";
-import useGuestSession from "@/hooks/useGuestSession";
 import { useWindowSize } from "@/hooks/useWindow";
 
 const CardDesktop = dynamic(() => import("@/componests/CardDestop"), {
@@ -15,8 +14,7 @@ const CardMobile = dynamic(() => import("@/componests/CardMobile"), {
   ssr: false,
 });
 
-const RatedPage = () => {
-  useGuestSession();
+const MovieSearchPage = () => {
   const { width } = useWindowSize();
   const searchParams = useSearchParams() as ReadonlyURLSearchParams;
   const query = searchParams.get("query") || "";
@@ -37,7 +35,7 @@ const RatedPage = () => {
   }
   const base_url = process.env.NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL;
 
-  const isMobile = width !== undefined && width < 768; // Determine if the device is mobile
+  const isMobile = width !== undefined && width < 768;
 
   //(!query || isLoading || !data || data.results.length === 0)
   if (isLoading || !data || data.results.length === 0) {
@@ -107,4 +105,4 @@ const RatedPage = () => {
   );
 };
 
-export default RatedPage;
+export default MovieSearchPage;

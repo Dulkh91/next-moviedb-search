@@ -50,8 +50,8 @@ const [imageLoading, setImageLoading] = useState(false)
             alt={title}
             fill
             loading="lazy"
-            placeholder={"blur"}
-            blurDataURL={src}
+            // placeholder={"blur"}
+            // blurDataURL={src}
             className={`object-fit transition-opacity duration-500 ease-in-out ${imageLoading? 'opacity-100':'opacity-0'} `} 
             onLoad={() => setImageLoading(true)}
             // onLoadingComplete={(img) => img.classList.remove("opacity-0")}

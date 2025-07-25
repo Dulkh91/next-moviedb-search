@@ -37,7 +37,7 @@ const CardMobile = ({
   genres,
   movieId,
 }: Props) => {
-  const[imageLoading ,setImageLoading] = useState(false)
+  const [imageLoading, setImageLoading] = useState(false);
   return (
     <div className=" shadow max-w-[451px] relative" id="card_mobile">
       <div className=" m-2 p-2">
@@ -48,13 +48,12 @@ const CardMobile = ({
               fill
               alt={title}
               loading="lazy"
-              placeholder={"blur"}
-              blurDataURL={src}
+              // placeholder={"blur"}
+              // blurDataURL={src}
               // style={{ objectFit: "cover" }}
-              className={`object-fit transition-opacity duration-500 ease-in-out ${imageLoading? 'opacity-100':'opacity-0'} `} 
+              className={`object-fit transition-opacity duration-500 ease-in-out ${imageLoading ? "opacity-100" : "opacity-0"} `}
               onLoad={() => setImageLoading(true)}
               sizes="(max-width: 768px) 60px, 60px"
-              
             />
           </div>
 

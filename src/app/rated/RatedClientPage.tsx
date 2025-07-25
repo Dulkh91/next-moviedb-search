@@ -2,7 +2,7 @@
 import { Skeleton, Flex } from "antd";
 import dynamic from "next/dynamic";
 
-const RatedPage = dynamic(() => import("@/componests/pages/RatedPage"), {
+const RatedPage = dynamic(() => import("@/app/rated/RatedPage"), {
   ssr: false,
   loading: () => <Skeleton active />,
 });
@@ -12,6 +12,7 @@ const PaginationPage = dynamic(() => import("@/componests/Pagination"), {
   loading: () => <Skeleton active />,
 });
 const RateClientPage = () => {
+  
   return (
     <>
       <RatedPage />
