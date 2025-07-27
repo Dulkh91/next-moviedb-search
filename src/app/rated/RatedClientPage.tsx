@@ -7,17 +7,16 @@ const RatedPage = dynamic(() => import("@/app/rated/RatedPage"), {
   loading: () => <Skeleton active />,
 });
 
-const PaginationPage = dynamic(() => import("@/componests/Pagination"), {
+const MoviePagination = dynamic(() => import("@/componests/MoviePagination"), {
   ssr: false,
   loading: () => <Skeleton active />,
 });
 const RateClientPage = () => {
-  
   return (
     <>
       <RatedPage />
       <Flex justify="center" flex={"flex"} className="mt-5 pagination-custom">
-        <PaginationPage />
+        <MoviePagination />
       </Flex>
     </>
   );

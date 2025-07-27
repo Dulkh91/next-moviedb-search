@@ -22,9 +22,13 @@ const Navbar = () => {
   const [loading, segLoading] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const [activeTabKey, setActiveTabKey] = useState(pathname);
+
+
   useEffect(() => {
+    setActiveTabKey(pathname);
     segLoading(true);
-  }, []);
+  }, [pathname]);
 
   if (!loading)
     return (
@@ -33,12 +37,19 @@ const Navbar = () => {
       </div>
     );
 
+    const handleTabChange = (key: string) => {
+
+    if (key !== pathname) {
+      router.push(key);
+    }
+  };
+
   return (
     <>
       <nav className="flex justify-center w-full min-h-[40px]">
         <Tabs
-          activeKey={pathname ?? ""}
-          onChange={(key) => router.push(key)}
+          activeKey={activeTabKey}
+          onChange={handleTabChange}
           items={items.map((item) => ({ ...item, children: null }))}
           className="flex flex-row"
         />

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/componests/Navbar";
+import { PaginationProvider } from "@/context/PaginationContext";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +38,9 @@ export default function RootLayout({
         <div className="container mx-auto bg-white md:bg-white min-h-screen max-w-252.5">
           <div className=" mx-2 md:mx-3 md:p-2">
             <Navbar />
-            {children}
+            <PaginationProvider>
+              {children}
+            </PaginationProvider>
           </div>
         </div>
       </body>

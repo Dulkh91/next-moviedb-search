@@ -21,9 +21,8 @@ const useGuestSession = () => {
       })
       .catch((error) => console.error("Failed to create guest session", error));
   }, []);
-  
+
   return guestId;
 };
 
 export default useGuestSession;
-

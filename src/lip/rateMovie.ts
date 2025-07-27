@@ -15,29 +15,27 @@ export const rateMovie = async (movieId: string, rating: number) => {
     throw new Error("Missing BASE_URL or TOKEN_KEY");
   }
 
-try {
-   const response = await fetch(
-    `${BASE_URL}/movie/${movieId}/rating?guest_session_id=${sessionId}`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${TOKEN_KEY}`,
-        "Content-Type": "application/json",
+  try {
+    const response = await fetch(
+      `${BASE_URL}/movie/${movieId}/rating?guest_session_id=${sessionId}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${TOKEN_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ value: rating }),
       },
-      body: JSON.stringify({ value: rating }),
-    },
-  );
-  const data = await response.json();
+    );
+    const data = await response.json();
 
-   if (!response.ok) {
-    console.error("TMDB Rate Error:", data);
-    throw new Error(data.status_message || "Failed to rate movie");
+    if (!response.ok) {
+      console.error("TMDB Rate Error:", data);
+      throw new Error(data.status_message || "Failed to rate movie");
+    }
+
+    return data;
+  } catch (error) {
+    console.error(error);
   }
-
-  return data;
-  
-} catch (error) {
-  console.error(error)
-}
- 
 };

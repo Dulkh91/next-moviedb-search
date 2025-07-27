@@ -7,7 +7,6 @@ import { Movie } from "@/types/movie";
 import { mutate } from "swr";
 import { getRateMoviesSWRKey } from "@/utils/getRateMoviesSWRKey";
 
-
 type Props = {
   movieId: string;
 };
@@ -20,7 +19,7 @@ const VoteStar = ({ movieId }: Props) => {
   useEffect(() => {
     if (!movieId) return; // ប្រសិនបើ movieId មិនមានទេ កុំធ្វើអ្វី
 
-    if ( typeof ratedData !== "undefined" && !isLoading && ratedData.results) {
+    if (typeof ratedData !== "undefined" && !isLoading && ratedData.results) {
       const found = ratedData.results.find(
         (m: Movie) => String(m.id) === String(movieId),
       );
@@ -30,30 +29,22 @@ const VoteStar = ({ movieId }: Props) => {
     }
   }, [ratedData, isLoading, movieId]);
 
-
-
   const handleRate = async (value: number) => {
     try {
-      
       setRating(value);
-      console.log(value);
-     await rateMovie(String(movieId), value); // TMDB ទទួល rating 0.5-10 (មិនត្រូវគុណ 2)
-     
+      await rateMovie(String(movieId), value); // TMDB ទទួល rating 0.5-10 (មិនត្រូវគុណ 2)
 
       // invalidate SWR cache for rated movies
       const swrKey = getRateMoviesSWRKey();
 
       if (swrKey) {
-        mutate(swrKey)
+        mutate(swrKey);
       }
-      
-
     } catch (error) {
       console.error("Failed to rate:", error);
       message.error("ការវាយតម្លៃបរាជ័យ");
     }
   };
-
 
   return (
     <Rate
@@ -62,7 +53,7 @@ const VoteStar = ({ movieId }: Props) => {
       value={rating}
       style={{ fontSize: 18 }}
       className="flex flex-row custom-rate"
-      onChange={handleRate} 
+      onChange={handleRate}
     />
   );
 };

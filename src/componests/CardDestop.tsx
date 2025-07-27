@@ -38,8 +38,7 @@ const CardDesktop = ({
   genres,
   movieId,
 }: Props) => {
-
-const [imageLoading, setImageLoading] = useState(false)
+  const [imageLoading, setImageLoading] = useState(false);
 
   return (
     <div className=" shadow max-w-[451px] relative" id="card_desktop">
@@ -52,7 +51,7 @@ const [imageLoading, setImageLoading] = useState(false)
             loading="lazy"
             // placeholder={"blur"}
             // blurDataURL={src}
-            className={`object-fit transition-opacity duration-500 ease-in-out ${imageLoading? 'opacity-100':'opacity-0'} `} 
+            className={`object-fit transition-opacity duration-500 ease-in-out ${imageLoading ? "opacity-100" : "opacity-0"} `}
             onLoad={() => setImageLoading(true)}
             // onLoadingComplete={(img) => img.classList.remove("opacity-0")}
             sizes="(max-width: 768px) 183px, 183px"
@@ -61,8 +60,8 @@ const [imageLoading, setImageLoading] = useState(false)
 
         <div className="flex-row-1 m-3">
           <div>
-            <h1 className="text-5 font-semibold mr-6">{title}</h1>
-            <p className="text-gray-500 text-xs mb-2">{releaseDate} </p>
+            <h1 className="text-5 font-semibold mr-6">{title || "No title available"}</h1>
+            <p className="text-gray-500 text-xs mb-2">{releaseDate || "Unknown date"} </p>
 
             {/* Gengre */}
             <div className=" flex flex-wrap gap-1">
@@ -70,7 +69,7 @@ const [imageLoading, setImageLoading] = useState(false)
             </div>
 
             <p className="text-xs mt-2 text-gray-700 line-clamp-6 text-wrap">
-              {overview}
+              {overview || "No description provided." }
             </p>
 
             {/* Stars */}
@@ -84,7 +83,7 @@ const [imageLoading, setImageLoading] = useState(false)
 
             {/* Star vote rate */}
             {movieId && (
-              <div className=" flex mt-2 items-center whitespace-nowrap">
+              <div className="flex mt-2 items-center whitespace-nowrap">
                 <Suspense fallback={<Spin size="small" />}>
                   <VoteStar movieId={movieId} />
                 </Suspense>

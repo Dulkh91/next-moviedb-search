@@ -7,7 +7,7 @@ import useGuestSession from "@/hooks/useGuestSession";
 import { useEffect } from "react";
 import { mutate } from "swr";
 import { getRateMoviesSWRKey } from "@/utils/getRateMoviesSWRKey";
-
+import { useSearchParams } from "next/navigation";
 import { useRated } from "@/hooks/useRated";
 
 const CardDesktop = dynamic(() => import("@/componests/CardDestop"), {
@@ -19,25 +19,25 @@ const CardMobile = dynamic(() => import("@/componests/CardMobile"), {
 
 const RatedPage = () => {
   useGuestSession();
-const base_url = process.env.NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL;  
+  
+  const search = useSearchParams()!
+  const page = search.get("page") || "1";
+  const base_url = process.env.NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL;
 
-  const {ratedData,isLoading} = useRated()
+  const { ratedData, isLoading } = useRated(Number(page));
 
-   
-  useEffect(()=>{
-    const swrKey = getRateMoviesSWRKey()
-    if(swrKey){
-      mutate(swrKey)
+  useEffect(() => {
+    const swrKey = getRateMoviesSWRKey();
+    if (swrKey) {
+      mutate(swrKey);
     }
-  },[])  
-
+  }, []);
 
   if (typeof ratedData.results === "undefined") {
     return (
-      <Alert  message="No rated movies found" type="info"  className="text-lg" />
-    ); 
+      <Alert message="No rated movies found" type="info" className="text-lg" />
+    );
   }
-  
 
   if (isLoading) {
     return <Skeleton active />;
@@ -46,8 +46,6 @@ const base_url = process.env.NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL;
   if (!ratedData) {
     <Alert message="Failed to load movies" type="error" className="text-lg" />;
   }
-  
-
 
   //(!query || isLoading || !data || data.results.length === 0)
   if (isLoading || ratedData.results.length === 0) {
@@ -60,8 +58,9 @@ const base_url = process.env.NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL;
     );
   }
 
-  console.log(ratedData);
-  return (<>
+  // console.log(ratedData);
+  return (
+    <>
       <Flex align="center" gap={"middle"}>
         {/* Destop responsive */}
         <div
@@ -81,9 +80,8 @@ const base_url = process.env.NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL;
                   releaseDate={movie.release_date}
                   overview={movie.overview}
                   src={imageUrl}
-                  vote_average={movie.rating}// rate of vote
+                  vote_average={movie.rating} // rate of vote
                   vote_count={movie?.vote_average}
-                  
                 />
               );
             })}
@@ -104,13 +102,12 @@ const base_url = process.env.NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL;
                 <CardMobile
                   key={movie.id}
                   title={movie.title}
-                   genres={movie.genre_ids}
+                  genres={movie.genre_ids}
                   releaseDate={movie.release_date}
                   overview={movie.overview}
                   src={imageUrl}
                   vote_average={movie.rating}
                   vote_count={movie.vote_average}
-                 
                 />
               );
             })}
@@ -121,8 +118,6 @@ const base_url = process.env.NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL;
         <FloatButton.BackTop visibilityHeight={400} />
       </FloatButton.Group>
     </>
-
-
   );
 };
 

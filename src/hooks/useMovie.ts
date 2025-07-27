@@ -6,9 +6,8 @@ const fetcher = async (url: string) => {
 };
 
 export const useMovie = (query: string, page: string, type: string) => {
-  // ✅ បង្កើត URL ដោយស្រាវជ្រាវលើ condition
+  //  បង្កើត URL ដោយស្រាវជ្រាវលើ condition
   let endpoint: string | null = null;
-
   if (type === "search") {
     const trimmedQuery = query.trim();
     endpoint =
@@ -19,7 +18,7 @@ export const useMovie = (query: string, page: string, type: string) => {
     endpoint = `/api/movie?page=${page}`;
   }
 
-  // ✅ Call useSWR នៅទីតាំងតែមួយគត់
+  //  Call useSWR នៅទីតាំងតែមួយគត់
   const swrOptions =
     type === "search"
       ? { revalidateOnFocus: false }
