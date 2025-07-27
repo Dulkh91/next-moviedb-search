@@ -4,7 +4,6 @@ import "./globals.css";
 import Navbar from "@/componests/Navbar";
 import { PaginationProvider } from "@/context/PaginationContext";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -38,9 +37,7 @@ export default function RootLayout({
         <div className="container mx-auto bg-white md:bg-white min-h-screen max-w-252.5">
           <div className=" mx-2 md:mx-3 md:p-2">
             <Navbar />
-            <PaginationProvider>
-              {children}
-            </PaginationProvider>
+            <PaginationProvider>{children}</PaginationProvider>
           </div>
         </div>
       </body>

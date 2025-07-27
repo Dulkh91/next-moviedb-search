@@ -60,8 +60,12 @@ const CardDesktop = ({
 
         <div className="flex-row-1 m-3">
           <div>
-            <h1 className="text-5 font-semibold mr-6">{title || "No title available"}</h1>
-            <p className="text-gray-500 text-xs mb-2">{releaseDate || "Unknown date"} </p>
+            <h1 className="text-5 font-semibold mr-6">
+              {title || "No title available"}
+            </h1>
+            <p className="text-gray-500 text-xs mb-2">
+              {releaseDate || "Unknown date"}{" "}
+            </p>
 
             {/* Gengre */}
             <div className=" flex flex-wrap gap-1">
@@ -69,7 +73,7 @@ const CardDesktop = ({
             </div>
 
             <p className="text-xs mt-2 text-gray-700 line-clamp-6 text-wrap">
-              {overview || "No description provided." }
+              {overview || "No description provided."}
             </p>
 
             {/* Stars */}

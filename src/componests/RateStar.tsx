@@ -12,7 +12,8 @@ const RateStar = ({ vote_average }: Props) => {
       allowHalf
       defaultValue={vote_average}
       style={{ fontSize: 18 }}
-      className=" flex flex-row custom-rate"
+      disabled
+      className="flex flex-row custom-rate"
     />
   );
 };

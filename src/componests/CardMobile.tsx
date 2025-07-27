@@ -42,7 +42,6 @@ const CardMobile = ({
     <div className="w-full">
       <div className="shadow relative m-2 p-2 w-[365px] " id="card_mobile">
         <div className=" flex gap-2">
-
           <div className=" relative shrink-0 w-[60px] h-[90px]">
             <Image
               src={src}
@@ -59,8 +58,12 @@ const CardMobile = ({
 
           <div className="flex-row-1 m-3">
             <div>
-              <h1 className="text-5 font-semibold mr-2">{title || "No title available"}</h1>
-              <p className="text-gray-500 text-xs mb-2">{releaseDate || "Unknown date"} </p>
+              <h1 className="text-5 font-semibold mr-2">
+                {title || "No title available"}
+              </h1>
+              <p className="text-gray-500 text-xs mb-2">
+                {releaseDate || "Unknown date"}{" "}
+              </p>
 
               {/* Genres button */}
               <div className="flex flex-wrap gap-1">
@@ -71,7 +74,11 @@ const CardMobile = ({
         </div>
 
         <div>
-          <p className={`text-xs text-gray-700 mt-4 line-clamp-4 ${!overview? 'mt-5':""}`}>{overview || "No description provided."}</p>
+          <p
+            className={`text-xs text-gray-700 mt-4 line-clamp-4 ${!overview ? "mt-5" : ""}`}
+          >
+            {overview || "No description provided."}
+          </p>
 
           {/* Stars */}
           {typeof vote_average === "number" && (
@@ -92,13 +99,12 @@ const CardMobile = ({
           )}
         </div>
 
-           {/* Progress */}
-      {typeof vote_count === "number" && (
-        <div className=" absolute top-2 right-2">
-          <ProgressRateColor rating={vote_count || 0} />
-        </div>
-      )}
-
+        {/* Progress */}
+        {typeof vote_count === "number" && (
+          <div className=" absolute top-2 right-2">
+            <ProgressRateColor rating={vote_count || 0} />
+          </div>
+        )}
       </div>
     </div>
   );

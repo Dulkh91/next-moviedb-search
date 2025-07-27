@@ -24,7 +24,6 @@ const Navbar = () => {
   const pathname = usePathname();
   const [activeTabKey, setActiveTabKey] = useState(pathname);
 
-
   useEffect(() => {
     setActiveTabKey(pathname);
     segLoading(true);
@@ -37,8 +36,7 @@ const Navbar = () => {
       </div>
     );
 
-    const handleTabChange = (key: string) => {
-
+  const handleTabChange = (key: string) => {
     if (key !== pathname) {
       router.push(key);
     }

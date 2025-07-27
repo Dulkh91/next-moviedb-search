@@ -17,7 +17,6 @@ const PaginationPage = ({
   onPageChange,
   isLoading = false,
 }: Props) => {
-
   if (totalPages < 2) return null; // hide if only 1 page
 
   return (

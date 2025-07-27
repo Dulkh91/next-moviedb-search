@@ -6,12 +6,12 @@ const fetcher = ([url, token]: [string, string]) =>
     headers: { Authorization: `Bearer ${token}` },
   }).then((res) => res.json());
 
-export const useRated = (page?: number ) => {
+export const useRated = (page?: number) => {
   const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_WEB_URL;
   const TOKEN_KEY = process.env.NEXT_PUBLIC_CLIENT_TOKEN_KEY;
   const [guestSessionId, setGuestSessionId] = useState<string | null>(null);
 
-  const pageRate = page || 1
+  const pageRate = page || 1;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -21,7 +21,7 @@ export const useRated = (page?: number ) => {
       }
     }
   }, []);
-   
+
   const URL =
     guestSessionId && BASE_URL
       ? `${BASE_URL}/guest_session/${guestSessionId}/rated/movies?page=${pageRate}`
@@ -35,5 +35,5 @@ export const useRated = (page?: number ) => {
   if (!URL || !TOKEN_KEY) return { ratedData: [], isLoading: true };
   if (isLoading || !data) return { ratedData: [], isLoading: true };
 
-  return { ratedData: data || [],ratePage: data.total_results, isLoading };
+  return { ratedData: data || [], ratePage: data.total_results, isLoading };
 };

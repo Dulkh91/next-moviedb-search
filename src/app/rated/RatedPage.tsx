@@ -19,8 +19,8 @@ const CardMobile = dynamic(() => import("@/componests/CardMobile"), {
 
 const RatedPage = () => {
   useGuestSession();
-  
-  const search = useSearchParams()!
+
+  const search = useSearchParams()!;
   const page = search.get("page") || "1";
   const base_url = process.env.NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL;
 
