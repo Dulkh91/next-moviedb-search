@@ -29,8 +29,7 @@ const RatedPage = () => {
   const { ratedData, isLoading } = useRated(Number(page));
 
   useEffect(() => {
-     mutate(getRateMoviesSWRKey)
-
+    mutate(getRateMoviesSWRKey);
   }, []);
 
   if (typeof ratedData.results === "undefined") {
@@ -68,33 +67,32 @@ const RatedPage = () => {
           id="movie_search-destop"
         >
           <AnimatePresence>
-          {ratedData.results &&
-            ratedData.results.map((movie: Movie) => {
-              const imageUrl = movie.poster_path
-                ? `${base_url}${movie.poster_path}`
-                : noImage;
-              return (
-                <motion.div
-                  key={movie.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5 }}
-                >
-                <CardDesktop
-                  
-                  title={movie.title}
-                  genres={movie.genre_ids}
-                  releaseDate={movie.release_date}
-                  overview={movie.overview}
-                  src={imageUrl}
-                  vote_average={movie.rating} // rate of vote
-                  vote_count={movie?.vote_average}
-                  deleteBtnId={movie.id}
-                />
-                </motion.div>
-              );
-            })}
+            {ratedData.results &&
+              ratedData.results.map((movie: Movie) => {
+                const imageUrl = movie.poster_path
+                  ? `${base_url}${movie.poster_path}`
+                  : noImage;
+                return (
+                  <motion.div
+                    key={movie.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <CardDesktop
+                      title={movie.title}
+                      genres={movie.genre_ids}
+                      releaseDate={movie.release_date}
+                      overview={movie.overview}
+                      src={imageUrl}
+                      vote_average={movie.rating} // rate of vote
+                      vote_count={movie?.vote_average}
+                      deleteBtnId={movie.id}
+                    />
+                  </motion.div>
+                );
+              })}
           </AnimatePresence>
         </div>
 

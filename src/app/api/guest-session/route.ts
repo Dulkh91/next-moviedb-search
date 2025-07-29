@@ -15,6 +15,5 @@ export const GET = async () => {
   }
 
   const data = await res.json();
-  console.log("Guest session created:", data);
   return NextResponse.json(data); // includes guest_session_id
 };

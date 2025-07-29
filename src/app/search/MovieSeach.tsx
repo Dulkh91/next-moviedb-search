@@ -23,7 +23,7 @@ const MovieSearchPage = () => {
   const { data, isLoading, error } = useMovie(
     query,
     page,
-    query ? "search" : "discover" //កំណត់ថា type ប្រសិនបើ query មិនបានបញ្ចូលទិន្ន័យផ្ទេទៅ discover
+    query ? "search" : "discover", //កំណត់ថា type ប្រសិនបើ query មិនបានបញ្ចូលទិន្ន័យផ្ទេទៅ discover
   );
 
   if (isLoading) {
@@ -63,9 +63,7 @@ const MovieSearchPage = () => {
             : noImage;
 
           // Render CardMobile for mobile devices, otherwise render CardDesktop
-          return (
-            <>
-              {isMobile ? (
+          return (isMobile ? (
                 <div key={movie.id}>
                   {/* Full width on mobile, hidden on desktop */}
                   <CardMobile
@@ -81,21 +79,21 @@ const MovieSearchPage = () => {
               ) : (
                 <div
                   key={movie.id}
-                  className="flex flex-col mt-5 gap-5 duration-300 mx-auto">
+                  className="flex flex-col mt-5 gap-5 duration-300 mx-auto"
+                >
                   {/* Hidden on mobile, specific widths on desktop */}
-                    <CardDesktop
-                      title={movie.title}
-                      releaseDate={movie.release_date}
-                      genres={movie.genre_ids}
-                      overview={movie.overview}
-                      src={imageUrl}
-                      vote_count={movie.vote_average}
-                      movieId={String(movie.id)}
-                    />
-                  </div>
-              )}
-            </>
-          );
+                  <CardDesktop
+                    title={movie.title}
+                    releaseDate={movie.release_date}
+                    genres={movie.genre_ids}
+                    overview={movie.overview}
+                    src={imageUrl}
+                    vote_count={movie.vote_average}
+                    movieId={String(movie.id)}
+                  />
+                </div>
+              )
+            );
         })}
       </Flex>
       {/* Float button for "Back to Top" functionality */}

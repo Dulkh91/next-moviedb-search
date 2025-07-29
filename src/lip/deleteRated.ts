@@ -1,11 +1,11 @@
-import { mutate } from 'swr';
-import { getRateMoviesSWRKey } from '@/utils/getRateMoviesSWRKey';
+import { mutate } from "swr";
+import { getRateMoviesSWRKey } from "@/utils/getRateMoviesSWRKey";
 export const deleteRating = async (movieId: string) => {
   const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_WEB_URL;
   const TOKEN = process.env.NEXT_PUBLIC_CLIENT_TOKEN_KEY;
   const guestSession = localStorage.getItem("guest_session_id");
   const URL = `${BASE_URL}/movie/${movieId}/rating?guest_session_id=${guestSession}`;
-  
+
   const option = {
     method: "DELETE",
     headers: {
@@ -16,7 +16,7 @@ export const deleteRating = async (movieId: string) => {
 
   try {
     const response = await fetch(URL, option);
-   
+
     if (!response.ok) {
       throw new Error(`Failed to delete rating: ${response.status}`);
     }

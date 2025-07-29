@@ -114,43 +114,51 @@ useEffect(() => {
 }, [pathname, pages, searchPage, ratedPage, setPage]);
 ```
 
-
 ```js
 //getRateMovie...
 [
-    "https://api.themoviedb.org/3/guest_session/b6da02eb24288c327467434f477cfa31/rated/movies",
-    "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhYzZmZGM0MjM4NTQ0MWY5ZTFiZmM4OWJjOGVjNjkzZiIsIm5iZiI6MTc1MjI0MzQ1MS41NzEsInN1YiI6IjY4NzExY2ZiNWEzYzQwYzYwMDU0MTlmZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.17USoqTiZAKAp6sSItKniqn2ZuLMWxuZSqJS84L6_HA"
-]
+  "https://api.themoviedb.org/3/guest_session/b6da02eb24288c327467434f477cfa31/rated/movies",
+  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhYzZmZGM0MjM4NTQ0MWY5ZTFiZmM4OWJjOGVjNjkzZiIsIm5iZiI6MTc1MjI0MzQ1MS41NzEsInN1YiI6IjY4NzExY2ZiNWEzYzQwYzYwMDU0MTlmZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.17USoqTiZAKAp6sSItKniqn2ZuLMWxuZSqJS84L6_HA",
+];
 ```
+
 ```js
 https://api.themoviedb.org/3/movie/1311031/rating?guest_session_id=b6da02eb24288c327467434f477cfa31
 
 ```
 
 ## base AIP url
+
 **dicover**
+
 ```ts
 https://api.themoviedb.org/3/discover/movie
 ```
+
 **search**
+
 ```ts
 https://api.themoviedb.org/3/search/movie
 ```
 
---- 
-
+---
 
 ### from website:
- **delete rate** 
-``` ts 
+
+**delete rate**
+
+```ts
 https://api.themoviedb.org/3/movie/{movie_id}/rating
 ```
+
 **add rate**
 
 ```ts
 https://api.themoviedb.org/3/movie/{movie_id}/rating
 ```
+
 **rated movie**
+
 ```ts
 https://api.themoviedb.org/3/guest_session/{guest_session_id}/rated/movies
 ```

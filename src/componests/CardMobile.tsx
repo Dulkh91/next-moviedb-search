@@ -15,7 +15,9 @@ const ProgressRateColor = dynamic(
     ssr: false,
   },
 );
-const CancelBtn = dynamic(()=> import("@/componests/DeleteBtn"),{ ssr: false })
+const CancelBtn = dynamic(() => import("@/componests/DeleteBtn"), {
+  ssr: false,
+});
 
 type Props = {
   src: string;
@@ -38,7 +40,7 @@ const CardMobile = ({
   vote_count,
   genres,
   movieId,
-  deleteBtnId
+  deleteBtnId,
 }: Props) => {
   const [imageLoading, setImageLoading] = useState(false);
   return (
@@ -110,7 +112,7 @@ const CardMobile = ({
         )}
 
         {/* Delete button for card */}
-        {deleteBtnId && <CancelBtn id={String(deleteBtnId)}/>} 
+        {deleteBtnId && <CancelBtn id={String(deleteBtnId)} />}
       </div>
     </div>
   );
