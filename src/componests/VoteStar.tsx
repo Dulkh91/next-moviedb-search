@@ -52,9 +52,9 @@ const VoteStar = ({ movieId }: Props) => {
       allowHalf
       value={rating}
       style={{ fontSize: 18 }}
-      className={`flex flex-row custom-rate ${rating? 'opacity-40 disabled:':''}`}
+      className={`flex flex-row custom-rate ${rating ? "opacity-40 disabled:" : ""}`}
       onChange={handleRate}
-      disabled={rating?true: false}
+      disabled={rating ? true : false}
     />
   );
 };

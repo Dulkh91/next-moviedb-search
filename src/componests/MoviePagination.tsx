@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { MovieApiResponse } from "@/types/pageApi";
+import { MovieApiResponse } from "@/types/MovieApiResponse";
 import { useMovie } from "@/hooks/useMovie";
 import { Skeleton } from "antd";
 import { useRated } from "@/hooks/useRated";

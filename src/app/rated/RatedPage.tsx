@@ -6,9 +6,11 @@ import noImage from "../../../public/noImage.svg";
 import useGuestSession from "@/hooks/useGuestSession";
 import { useEffect } from "react";
 import { mutate } from "swr";
-import { getRateMoviesSWRKey } from "@/utils/getRateMoviesSWRKey";
+import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useRated } from "@/hooks/useRated";
+
+import { getRateMoviesSWRKey } from "@/utils/getRateMoviesSWRKey";
 
 const CardDesktop = dynamic(() => import("@/componests/CardDestop"), {
   ssr: false,
@@ -27,10 +29,8 @@ const RatedPage = () => {
   const { ratedData, isLoading } = useRated(Number(page));
 
   useEffect(() => {
-    const swrKey = getRateMoviesSWRKey();
-    if (swrKey) {
-      mutate(swrKey);
-    }
+     mutate(getRateMoviesSWRKey)
+
   }, []);
 
   if (typeof ratedData.results === "undefined") {
@@ -67,14 +67,22 @@ const RatedPage = () => {
           className=" hidden md:grid grid-cols-2 mt-5 gap-5 duration-300 mx-auto"
           id="movie_search-destop"
         >
+          <AnimatePresence>
           {ratedData.results &&
             ratedData.results.map((movie: Movie) => {
               const imageUrl = movie.poster_path
                 ? `${base_url}${movie.poster_path}`
                 : noImage;
               return (
-                <CardDesktop
+                <motion.div
                   key={movie.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                <CardDesktop
+                  
                   title={movie.title}
                   genres={movie.genre_ids}
                   releaseDate={movie.release_date}
@@ -82,38 +90,53 @@ const RatedPage = () => {
                   src={imageUrl}
                   vote_average={movie.rating} // rate of vote
                   vote_count={movie?.vote_average}
+                  deleteBtnId={movie.id}
                 />
+                </motion.div>
               );
             })}
+          </AnimatePresence>
         </div>
 
         {/* Mobile responsive */}
         <div
-          className="md:hidden space-y-5 mt-5 duration-300 "
+          className="md:hidden space-y-5 mt-5 duration-300 mx-auto "
           id="movie_search-mobile"
         >
-          {ratedData.results &&
-            ratedData.results.map((movie: Movie) => {
-              const imageUrl = movie.poster_path
-                ? `${base_url}${movie.poster_path}`
-                : noImage;
+          <AnimatePresence>
+            {ratedData.results &&
+              ratedData.results.map((movie: Movie) => {
+                const imageUrl = movie.poster_path
+                  ? `${base_url}${movie.poster_path}`
+                  : noImage;
 
-              return (
-                <CardMobile
-                  key={movie.id}
-                  title={movie.title}
-                  genres={movie.genre_ids}
-                  releaseDate={movie.release_date}
-                  overview={movie.overview}
-                  src={imageUrl}
-                  vote_average={movie.rating}
-                  vote_count={movie.vote_average}
-                />
-              );
-            })}
+                return (
+                  <motion.div
+                    key={movie.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <CardMobile
+                      title={movie.title}
+                      genres={movie.genre_ids}
+                      releaseDate={movie.release_date}
+                      overview={movie.overview}
+                      src={imageUrl}
+                      vote_average={movie.rating}
+                      vote_count={movie.vote_average}
+                      deleteBtnId={movie.id}
+                    />
+                  </motion.div>
+                );
+              })}
+          </AnimatePresence>
         </div>
       </Flex>
       {/* Go Top */}
+      {/* <button onClick={async ()=> await deleteRating("1234821")}>delete card</button> */}
+
       <FloatButton.Group shape="circle" className="float_btn-edit">
         <FloatButton.BackTop visibilityHeight={400} />
       </FloatButton.Group>

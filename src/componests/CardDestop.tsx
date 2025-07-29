@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { Spin } from "antd";
 import VoteStar from "./VoteStar";
 import { useState } from "react";
+import CancelBtn from "./DeleteBtn";
 
 const RateStar = dynamic(() => import("@/componests/RateStar"), { ssr: false });
 const GengresPage = dynamic(() => import("@/componests/Gengres"), {
@@ -26,6 +27,7 @@ type Props = {
   vote_count?: number;
   genres: number[];
   movieId?: string;
+  deleteBtnId?: number;
 };
 
 const CardDesktop = ({
@@ -37,6 +39,7 @@ const CardDesktop = ({
   vote_count,
   genres,
   movieId,
+  deleteBtnId
 }: Props) => {
   const [imageLoading, setImageLoading] = useState(false);
 
@@ -104,6 +107,8 @@ const CardDesktop = ({
           <ProgressRateColor rating={vote_count || 0} />
         </div>
       )}
+      {/* Delete button for card */}
+      {deleteBtnId && <CancelBtn id={String(deleteBtnId)}/>} 
     </div>
   );
 };

@@ -24,6 +24,9 @@ body {
   width: 183px;
   height: 281px;
 }
+.delete_btn{
+  opacity: 0;
+}
 
 /* mobile */
 @media only screen and (max-width: 767px) {

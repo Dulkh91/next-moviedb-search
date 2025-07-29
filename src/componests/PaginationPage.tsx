@@ -17,8 +17,8 @@ const PaginationPage = ({
   onPageChange,
   isLoading = false,
 }: Props) => {
-  if (totalPages < 2) return null; // hide if only 1 page
-
+  if (totalPages < 2 || typeof totalPages === "undefined") return null; // hide if only 1 page
+  console.log(totalPages);
   return (
     <div className="flex justify-center mt-4">
       <Pagination

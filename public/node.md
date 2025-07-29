@@ -114,6 +114,7 @@ const paginationData = isRatedPage ? ratedData : data;
 
 if (isValidating || !paginationData) {
 return (
+
 <div className="flex justify-center items-center min-h-screen">
 {/_ <Skeleton active /> _/}
 </div>
@@ -128,6 +129,7 @@ window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
 return (
+
 <div className="flex justify-center mt-4">
 {typeof paginationData.total_pages !== "undefined" && (
 <Pagination
