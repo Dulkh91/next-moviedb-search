@@ -17,19 +17,20 @@ const DeleteBtn = ({ id }: { id: string }) => {
     try {
       // លុប rating តាមរយៈ API
       await deleteRating(id);
-
-     mutate(
-        [getRateMoviesSWRKey],
+      const key = [getRateMoviesSWRKey]
+      mutate(
+        key,
         (currentData: MovieApiResponse | undefined) => {
           if (!currentData) return currentData;
           return {
             ...currentData,
-            results: currentData.results.filter(movie => String(movie.id) !== id),
+            results: currentData.results.filter(
+              (movie) => String(movie.id) !== id,
+            ),
           };
         },
-        false // មិន revalidate ភ្លាម
+        false, // មិន revalidate ភ្លាម
       );
-
     } catch (err) {
       console.error("បរាជ័យក្នុងការលុប rating", err);
     } finally {
@@ -37,14 +38,20 @@ const DeleteBtn = ({ id }: { id: string }) => {
     }
   };
 
-
   return (
-      <button className=" group-hover absolute top-0 left-0" onClick={handleDelete} disabled={deleting}>
-          {deleting?(<Spin indicator={<LoadingOutlined spin style={{color:"white"}}/>} />)
-          :(<span className="absolute top-0 left-0 w-6 h-6 bg-gray-400/60 hover:bg-gray-400/20 rounded-full flex justify-center items-center cursor-pointer">
-            <MdDeleteOutline className="text-2xl text-white/70 hover:text-white"/>
-          </span>)}
-      </button>
+    <button
+      className=" group-hover absolute top-0 left-0"
+      onClick={handleDelete}
+      disabled={deleting}
+    >
+      {deleting ? (
+        <Spin indicator={<LoadingOutlined spin style={{ color: "white" }} />} />
+      ) : (
+        <span className="absolute top-0 left-0 w-6 h-6 bg-gray-400/60 hover:bg-gray-400/20 rounded-full flex justify-center items-center cursor-pointer">
+          <MdDeleteOutline className="text-2xl text-white/70 hover:text-white" />
+        </span>
+      )}
+    </button>
   );
 };
 

@@ -29,7 +29,8 @@ const RatedPage = () => {
   const { ratedData, isLoading } = useRated(Number(page));
 
   useEffect(() => {
-    mutate(getRateMoviesSWRKey);
+     const swrKey = getRateMoviesSWRKey
+      mutate(swrKey, undefined, { revalidate: true });
   }, []);
 
   if (typeof ratedData.results === "undefined") {

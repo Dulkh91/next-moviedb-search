@@ -6,7 +6,7 @@ import { Spin } from "antd";
 import VoteStar from "./VoteStar";
 import { useState } from "react";
 
-const RateStar = dynamic(() => import("@/componests/RateStar"), { ssr: false });
+const RateStar = dynamic(() => import("@/componests/RateStarPage"), { ssr: false });
 const GengresPage = dynamic(() => import("@/componests/Gengres"), {
   ssr: false,
 });
@@ -16,7 +16,9 @@ const ProgressRateColor = dynamic(
     ssr: false,
   },
 );
-const CancelBtn = dynamic(()=>import("@/componests/DeleteBtn"), {ssr: false})
+const CancelBtn = dynamic(() => import("@/componests/DeleteBtn"), {
+  ssr: false,
+});
 
 type Props = {
   src: string;
@@ -109,7 +111,6 @@ const CardDesktop = ({
       )}
       {/* Delete button for card */}
       {deleteBtnId && <CancelBtn id={String(deleteBtnId)} />}
-
     </div>
   );
 };

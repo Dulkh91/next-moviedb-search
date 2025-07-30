@@ -63,37 +63,36 @@ const MovieSearchPage = () => {
             : noImage;
 
           // Render CardMobile for mobile devices, otherwise render CardDesktop
-          return (isMobile ? (
-                <div key={movie.id}>
-                  {/* Full width on mobile, hidden on desktop */}
-                  <CardMobile
-                    title={movie.title}
-                    releaseDate={movie.release_date}
-                    genres={movie.genre_ids}
-                    overview={movie.overview}
-                    src={imageUrl}
-                    vote_count={movie.vote_average}
-                    movieId={String(movie.id)}
-                  />
-                </div>
-              ) : (
-                <div
-                  key={movie.id}
-                  className="flex flex-col mt-5 gap-5 duration-300 mx-auto"
-                >
-                  {/* Hidden on mobile, specific widths on desktop */}
-                  <CardDesktop
-                    title={movie.title}
-                    releaseDate={movie.release_date}
-                    genres={movie.genre_ids}
-                    overview={movie.overview}
-                    src={imageUrl}
-                    vote_count={movie.vote_average}
-                    movieId={String(movie.id)}
-                  />
-                </div>
-              )
-            );
+          return isMobile ? (
+            <div key={movie.id}>
+              {/* Full width on mobile, hidden on desktop */}
+              <CardMobile
+                title={movie.title}
+                releaseDate={movie.release_date}
+                genres={movie.genre_ids}
+                overview={movie.overview}
+                src={imageUrl}
+                vote_count={movie.vote_average}
+                movieId={String(movie.id)}
+              />
+            </div>
+          ) : (
+            <div
+              key={movie.id}
+              className="flex flex-col mt-5 gap-5 duration-300 mx-auto"
+            >
+              {/* Hidden on mobile, specific widths on desktop */}
+              <CardDesktop
+                title={movie.title}
+                releaseDate={movie.release_date}
+                genres={movie.genre_ids}
+                overview={movie.overview}
+                src={imageUrl}
+                vote_count={movie.vote_average}
+                movieId={String(movie.id)}
+              />
+            </div>
+          );
         })}
       </Flex>
       {/* Float button for "Back to Top" functionality */}

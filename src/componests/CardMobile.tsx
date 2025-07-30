@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import VoteStar from "./VoteStar";
 import { useState } from "react";
 
-const RateStar = dynamic(() => import("@/componests/RateStar"), { ssr: false });
+const RateStar = dynamic(() => import("@/componests/RateStarPage"), { ssr: false });
 const GengresPage = dynamic(() => import("@/componests/Gengres"), {
   ssr: false,
 });

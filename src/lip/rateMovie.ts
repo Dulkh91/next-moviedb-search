@@ -1,3 +1,7 @@
+import { getRateMoviesSWRKey } from "@/utils/getRateMoviesSWRKey";
+import { mutate } from "swr";
+import { MovieApiResponse } from "@/types/MovieApiResponse";
+
 export const rateMovie = async (movieId: string, rating: number) => {
   const sessionId = localStorage.getItem("guest_session_id"); //ឬ guest session
 
@@ -25,14 +29,28 @@ export const rateMovie = async (movieId: string, rating: number) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ value: rating }),
-      },
+      }
     );
     const data = await response.json();
-
     if (!response.ok) {
       console.error("TMDB Rate Error:", data);
       throw new Error(data.status_message || "Failed to rate movie");
     }
+    const key = [getRateMoviesSWRKey];
+    mutate(
+      key, // ✅ CALL the function
+      (currentData: MovieApiResponse | undefined) => {
+        if (!currentData) return currentData;
+
+        return {
+          ...currentData,
+          results: currentData.results.map((movie) =>
+            String(movie.id) === movieId ? { ...movie, rating } : movie
+          ),
+        };
+      },
+      false
+    );
 
     return data;
   } catch (error) {
