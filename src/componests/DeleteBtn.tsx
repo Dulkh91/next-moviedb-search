@@ -17,7 +17,7 @@ const DeleteBtn = ({ id }: { id: string }) => {
     try {
       // លុប rating តាមរយៈ API
       await deleteRating(id);
-      const key = [getRateMoviesSWRKey]
+      const key = [getRateMoviesSWRKey];
       mutate(
         key,
         (currentData: MovieApiResponse | undefined) => {

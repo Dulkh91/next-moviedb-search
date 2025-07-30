@@ -9,8 +9,8 @@ A movie search and rating web application built using **Next.js 15**, **TypeScri
 ## Features
 
 - 🔎 **Search Movies** by keyword with instant result and server-side pagination
-- ⭐ **Rate Movies** with 0.5 to 10 stars using a guest session
-- ❤️ **Rated Tab** to view all rated movies
+- ⭐ **Rate Movies** with 0.5 to 10 stars using a guest session and update star anable
+- ❤️ **Rated Tab** to view all rated movies and remove rated
 - 🎨 **Color-coded rating display** using circular progress indicators
 - 🧠 **Genre Tags** rendered from genre IDs via API
 - ⚙️ **Responsive Design** for both desktop and mobile
@@ -25,7 +25,9 @@ A movie search and rating web application built using **Next.js 15**, **TypeScri
 - **UI Library**: [Ant Design (antd)](https://ant.design/)
 - **HTTP Hook**: [SWR](https://swr.vercel.app/)
 - **API**: [The Movie Database (TMDB)](https://developer.themoviedb.org/)
+- **ANIMATION**: [Motion](https://motion.dev/)
 - **Utils**: Lodash, Prettier, ESLint, Husky
+
 
 ---
 
@@ -88,6 +90,8 @@ npm run build     # Production build
 [Ant Design](https://ant.design/)
 
 [Next.js](https://nextjs.org/)
+
+[Motion](https://motion.dev/)
 
 ---
 

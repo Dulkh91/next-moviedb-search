@@ -29,7 +29,7 @@ export const rateMovie = async (movieId: string, rating: number) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ value: rating }),
-      }
+      },
     );
     const data = await response.json();
     if (!response.ok) {
@@ -45,11 +45,11 @@ export const rateMovie = async (movieId: string, rating: number) => {
         return {
           ...currentData,
           results: currentData.results.map((movie) =>
-            String(movie.id) === movieId ? { ...movie, rating } : movie
+            String(movie.id) === movieId ? { ...movie, rating } : movie,
           ),
         };
       },
-      false
+      false,
     );
 
     return data;
