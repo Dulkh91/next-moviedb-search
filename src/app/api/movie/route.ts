@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export const GET = async (req: NextRequest) => {
-  // Detect url from browser
+  // Detect URL from browser
   const acceptHeader = req.headers.get("accept");
   const isHtmlRequest = acceptHeader?.includes("text/html");
 
@@ -13,11 +13,11 @@ export const GET = async (req: NextRequest) => {
   }
 
   // Access API by code
-  const clientApiKey = process.env.NEXT_PUBLIC_CLIENT_WEB_URL;
+  const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_WEB_URL;
   const apiKey = process.env.API_KEY;
   const token = process.env.NEXT_PUBLIC_CLIENT_TOKEN_KEY;
 
-  if (!clientApiKey || !apiKey || !token) {
+  if (!BASE_URL || !apiKey || !token) {
     return NextResponse.json({ error: "Resource not found" }, { status: 500 });
   }
 
@@ -37,7 +37,7 @@ export const GET = async (req: NextRequest) => {
 
   try {
     // get base url
-    let url = `${clientApiKey}/${type}/movie?`;
+    let url = `${BASE_URL}/${type}/movie?`;
 
     // Logical url change
     if (type === "search") {

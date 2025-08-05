@@ -1,9 +1,10 @@
 import useSWR from "swr";
-const fetcher = async (url: string) => {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Failed to fetch movie data");
-  return res.json();
-};
+import { fetcherMovie } from "@/lip/fecherMovie";
+// const fetcher = async (url: string) => {
+//   const res = await fetch(url);
+//   if (!res.ok) throw new Error("Failed to fetch movie data");
+//   return res.json();
+// };
 
 export const useMovie = (query: string, page: string, type: string) => {
   //  បង្កើត URL ដោយស្រាវជ្រាវលើ condition
@@ -23,7 +24,5 @@ export const useMovie = (query: string, page: string, type: string) => {
     type === "search"
       ? { revalidateOnFocus: false }
       : { keepPreviousData: true };
-  return useSWR(endpoint, fetcher, swrOptions);
+  return useSWR(endpoint, fetcherMovie, swrOptions);
 };
-
-//note.docs

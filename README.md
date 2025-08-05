@@ -28,7 +28,6 @@ A movie search and rating web application built using **Next.js 15**, **TypeScri
 - **ANIMATION**: [Motion](https://motion.dev/)
 - **Utils**: Lodash, Prettier, ESLint, Husky
 
-
 ---
 
 ## 🏁 Getting Started

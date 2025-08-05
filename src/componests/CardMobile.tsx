@@ -4,6 +4,7 @@ import { Spin } from "antd";
 import dynamic from "next/dynamic";
 import VoteStar from "./VoteStar";
 import { useState } from "react";
+import { CardProps } from "@/types/CardProps";
 
 const RateStar = dynamic(() => import("@/componests/RateStarPage"), {
   ssr: false,
@@ -21,18 +22,6 @@ const CancelBtn = dynamic(() => import("@/componests/DeleteBtn"), {
   ssr: false,
 });
 
-type Props = {
-  src: string;
-  title: string;
-  releaseDate: string;
-  overview: string;
-  vote_average?: number;
-  vote_count?: number;
-  genres: number[];
-  movieId?: string;
-  deleteBtnId?: number;
-};
-
 const CardMobile = ({
   src,
   title,
@@ -43,7 +32,8 @@ const CardMobile = ({
   genres,
   movieId,
   deleteBtnId,
-}: Props) => {
+  onSuccess
+}: CardProps) => {
   const [imageLoading, setImageLoading] = useState(false);
   return (
     <div className="w-full">
@@ -100,7 +90,9 @@ const CardMobile = ({
           {movieId && (
             <div className="flex mt-2 items-center whitespace-nowrap justify-end">
               <Suspense fallback={<Spin size="small" />}>
-                <VoteStar movieId={movieId} />
+                <VoteStar movieId={movieId}
+                  onSuccess={onSuccess}
+                />
               </Suspense>
             </div>
           )}
@@ -114,7 +106,7 @@ const CardMobile = ({
         )}
 
         {/* Delete button for card */}
-        {deleteBtnId && <CancelBtn id={String(deleteBtnId)} />}
+        {deleteBtnId && <CancelBtn id={String(deleteBtnId)} onSuccess={onSuccess} />}
       </div>
     </div>
   );

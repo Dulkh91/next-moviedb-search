@@ -4,8 +4,8 @@ import { Movie } from "@/types/movie";
 import { Alert, Skeleton, Flex, FloatButton } from "antd";
 import noImage from "../../../public/noImage.svg";
 import useGuestSession from "@/hooks/useGuestSession";
-import { useEffect } from "react";
-import { mutate } from "swr";
+import { useEffect,useState } from "react";
+import useSWR from "swr";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useRated } from "@/hooks/useRated";
@@ -22,16 +22,35 @@ const CardMobile = dynamic(() => import("@/componests/CardMobile"), {
 const RatedPage = () => {
   useGuestSession();
 
+  const [guestSessionId, setGuestSessionId] = useState<string | null>(null);
+  const [rateStatus, setRateStatus] = useState<boolean>(true) 
+  
   const search = useSearchParams()!;
-  const page = search.get("page") || "1";
+  const page = Number(search.get("page") || "1");
+  
   const base_url = process.env.NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL;
-
+  const mutate = useSWR(guestSessionId || page? getRateMoviesSWRKey(guestSessionId,page):null)
   const { ratedData, isLoading } = useRated(Number(page));
+  
+  useEffect(()=>{
+      const guestId = guestSessionId
+       if(typeof window !="undefined"){
+         localStorage.getItem('guest_session_id')
+        setGuestSessionId(guestId)
+        
+    }
+  },[])
 
   useEffect(() => {
-    const swrKey = getRateMoviesSWRKey;
-    mutate(swrKey, undefined, { revalidate: true });
+    mutate.mutate(undefined,{revalidate:true});
   }, []);
+  
+    // mutate( undefined, { revalidate: true });
+    
+
+  if (isLoading) {
+    return <Skeleton active />;
+  }
 
   if (typeof ratedData.results === "undefined") {
     return (
@@ -39,9 +58,6 @@ const RatedPage = () => {
     );
   }
 
-  if (isLoading) {
-    return <Skeleton active />;
-  }
 
   if (!ratedData) {
     <Alert message="Failed to load movies" type="error" className="text-lg" />;
@@ -58,7 +74,15 @@ const RatedPage = () => {
     );
   }
 
-  // console.log(ratedData);
+  const statusDelete = (e:boolean)=>{
+      if(!e){
+          setRateStatus(e)
+      }else{
+        setRateStatus(e)
+      }
+  }
+
+
   return (
     <>
       <Flex align="center" gap={"middle"}>
@@ -90,6 +114,7 @@ const RatedPage = () => {
                       vote_average={movie.rating} // rate of vote
                       vote_count={movie?.vote_average}
                       deleteBtnId={movie.id}
+                      onSuccess={statusDelete}
                     />
                   </motion.div>
                 );
@@ -126,6 +151,7 @@ const RatedPage = () => {
                       vote_average={movie.rating}
                       vote_count={movie.vote_average}
                       deleteBtnId={movie.id}
+                      onSuccess={statusDelete}
                     />
                   </motion.div>
                 );
@@ -133,9 +159,16 @@ const RatedPage = () => {
           </AnimatePresence>
         </div>
       </Flex>
-      {/* Go Top */}
-      {/* <button onClick={async ()=> await deleteRating("1234821")}>delete card</button> */}
+      {/* Message of error rate star */}
+    <div className={`fixed top-1/2 left-1/2  transform -translate-x-1/2 -translate-y-1/2 
+        ${rateStatus?'hidden':''}
+      `}>
+      <Alert type="error" message="Server error! Deleting the movie rating failed; please try again." banner 
+        onClick={()=>setRateStatus(true)}
+      />
+    </div>
 
+      {/* Go Top */}
       <FloatButton.Group shape="circle" className="float_btn-edit">
         <FloatButton.BackTop visibilityHeight={400} />
       </FloatButton.Group>
