@@ -39,7 +39,6 @@ export async function GET(req: NextRequest) {
       Authorization: `Bearer ${TOKEN}`,
       "Content-Type": "application/json",
     },
-   
   };
 
   if (!endpointUrl) {
@@ -51,7 +50,6 @@ export async function GET(req: NextRequest) {
 
   try {
     const response = await fetch(endpointUrl, options);
-
 
     if (!response.ok) {
       return NextResponse.json(

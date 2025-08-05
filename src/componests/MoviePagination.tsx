@@ -4,7 +4,7 @@ import { MovieApiResponse } from "@/types/MovieApiResponse";
 import { useMovie } from "@/hooks/useMovie";
 import { Skeleton } from "antd";
 import { useRated } from "@/hooks/useRated";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 const PaginationPage = dynamic(() => import("@/componests/PaginationPage"), {
@@ -46,7 +46,6 @@ const MoviePagination = () => {
     }
   }, []);
 
-
   const { ratedData } = useRated(guestSessionId, currentPageFromUrl); // useRated should use the numeric current page
 
   const paginationInitail = isRatedPage ? ratedData : data;
@@ -64,7 +63,7 @@ const MoviePagination = () => {
       params.delete("page");
       router.replace(`${pathname}?${params.toString()}`);
     }
-  }, [query,pathname,router,searchParams]);
+  }, [query]);
 
   const handleChangePage = (newPage: number) => {
     const params = new URLSearchParams(searchParams.toString());

@@ -26,7 +26,7 @@ const SearchBar = () => {
         params.set("query", value);
         router.push(`${pathname}?${params.toString()}`);
       }, 500),
-    [searchParams, pathname,router],
+    [searchParams, pathname, router],
   );
 
   // ✅ debounce logic separated in effect

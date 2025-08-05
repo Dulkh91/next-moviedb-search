@@ -7,6 +7,7 @@ import { Alert, Skeleton, Flex, FloatButton } from "antd";
 import noImage from "../../../public/noImage.svg";
 import { useWindowSize } from "@/hooks/useWindow";
 import { useState } from "react";
+import { ApiEror } from "@/utils/customError";
 
 const CardDesktop = dynamic(() => import("@/componests/CardDestop"), {
   ssr: false,
@@ -25,9 +26,21 @@ const MovieSearchPage = () => {
   const { data, isLoading, error } = useMovie(
     query,
     page,
-    query ? "search" : "discover", //កំណត់ថា type ប្រសិនបើ query មិនបានបញ្ចូលទិន្ន័យផ្ទេទៅ discover
+    query ? "search" : "discover" //កំណត់ថា type ប្រសិនបើ query មិនបានបញ្ចូលទិន្ន័យផ្ទេទៅ discover
   );
 
+  if (error) {
+    if (error instanceof ApiEror) {
+      return (
+        <Alert
+          message="Failed to load rated movies"
+          description={error.message || "Unknown error occurred"}
+          type="error"
+          className="text-lg"
+        />
+      );
+    }
+  }
   if (isLoading) {
     return <Skeleton active />;
   }
@@ -39,13 +52,12 @@ const MovieSearchPage = () => {
 
   const isMobile = width !== undefined && width < 768;
 
-  //(!query || isLoading || !data || data.results.length === 0)
-  if (isLoading || !data || data.results.length === 0) {
+  if (data && !isLoading && data.results.length === 0) {
     return (
       <Alert
         message="There are no movies that matched your query."
         type="info"
-        className="text-lg"
+        className="text-lg "
       />
     );
   }

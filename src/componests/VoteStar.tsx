@@ -1,12 +1,13 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { Rate } from "antd";
+import { Rate,Alert } from "antd";
 import { useRated } from "@/hooks/useRated";
 import { Movie } from "@/types/movie";
 import { useSubmitMovieRating } from "@/hooks/useRatingMovie";
 import { MovieApiResponse } from "@/types/MovieApiResponse";
 import { useSearchParams } from "next/navigation";
 import { throttle } from "lodash";
+import { ApiEror } from "@/utils/customError";
 
 type Props = {
   movieId: string;
@@ -14,15 +15,12 @@ type Props = {
 };
 
 const VoteStar = ({ movieId, onSuccess }: Props) => {
-
   const [rating, setRating] = useState<number>(0);
   const [guestSessionId, setGuestSessionId] = useState<string | null>(null);
   const { submitRating, isSubmitting } = useSubmitMovieRating();
-  
+
   const searchParams = useSearchParams();
   const page = Number(searchParams.get("page") || "1");
-
-  
 
   // Initialize guest session
   useEffect(() => {
@@ -34,9 +32,10 @@ const VoteStar = ({ movieId, onSuccess }: Props) => {
     }
   }, []);
 
-  const { ratedData, isLoading, mutate } = useRated(guestSessionId,Number(page));
-
-
+  const { ratedData, isLoading,error, mutate } = useRated(
+    guestSessionId,
+    Number(page),
+  );
 
   // set existing rating if found
   useEffect(() => {
@@ -51,6 +50,8 @@ const VoteStar = ({ movieId, onSuccess }: Props) => {
       }
     }
   }, [ratedData, isLoading, movieId]);
+
+  
 
   const handleRate = async (value: number) => {
     try {
@@ -118,6 +119,21 @@ const VoteStar = ({ movieId, onSuccess }: Props) => {
       throttledRateStar.cancel();
     };
   }, [throttledRateStar]);
+  
+if(error){
+    if(error instanceof ApiEror){
+      return (
+      <Alert
+        message={`Error: ${error.status}`}
+        description={error.message}
+        type="error"
+        className="text-lg"
+      />
+    )
+    }
+  }
+
+  
 
   return (
     <Rate

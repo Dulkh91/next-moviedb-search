@@ -9,7 +9,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useRated } from "@/hooks/useRated";
 
-
 const CardDesktop = dynamic(() => import("@/componests/CardDestop"), {
   ssr: false,
 });
@@ -27,17 +26,19 @@ const RatedPage = () => {
   const search = useSearchParams()!;
   const page = Number(search.get("page") || "1");
 
+  const { ratedData, isLoading, error } = useRated(
+    guestSessionId,
+    Number(page),
+  );
 
-   const { ratedData, isLoading, error } = useRated(guestSessionId,Number(page));
-
-   useEffect(() => {
+  useEffect(() => {
     if (typeof window != "undefined") {
       const guestId = localStorage.getItem("guest_session_id");
       setGuestSessionId(guestId);
     }
   }, []);
 
- //យើងលុបចោលទុកឲ្យ mutate ពី useRate អ្នកធ្វើការ
+  //យើងលុបចោលទុកឲ្យ mutate ពី useRate អ្នកធ្វើការ
   // useEffect(() => {
   //   if (guestSessionId && mutate) {
   //     mutate(); // revalidate current SWR key

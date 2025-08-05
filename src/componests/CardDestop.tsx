@@ -4,7 +4,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Spin } from "antd";
 import VoteStar from "./VoteStar";
-import { useState } from "react";
+// import { useState } from "react";
 import { CardProps } from "@/types/CardProps";
 
 const RateStar = dynamic(() => import("@/componests/RateStarPage"), {
@@ -35,7 +35,7 @@ const CardDesktop = ({
   deleteBtnId,
   onSuccess,
 }: CardProps) => {
-  const [imageLoading, setImageLoading] = useState<boolean>(false);
+  // const [imageLoading, setImageLoading] = useState<boolean>(false);
 
   return (
     <div className=" shadow max-w-[451px] relative" id="card_desktop">
@@ -47,9 +47,9 @@ const CardDesktop = ({
             fill
             loading="lazy"
             // placeholder={"blur"}
-            // blurDataURL={src}
-            className={`object-fit transition-opacity duration-500 ease-in-out ${imageLoading ? "opacity-100" : "opacity-0"} `}
-            onLoad={() => setImageLoading(true)}
+            blurDataURL={src}
+            // className={`object-fit transition-opacity duration-500 ease-in-out ${imageLoading ? "opacity-100" : "opacity-0"} `}
+            // onLoad={() => setImageLoading(true)}
             // onLoadingComplete={(img) => img.classList.remove("opacity-0")}
             sizes="(max-width: 768px) 183px, 183px"
           />
