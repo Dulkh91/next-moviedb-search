@@ -5,12 +5,10 @@ import { Alert, Skeleton, Flex, FloatButton } from "antd";
 import noImage from "../../../public/noImage.svg";
 import useGuestSession from "@/hooks/useGuestSession";
 import { useEffect, useState } from "react";
-import useSWR from "swr";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useRated } from "@/hooks/useRated";
 
-import { getRateMoviesSWRKey } from "@/utils/getRateMoviesSWRKey";
 
 const CardDesktop = dynamic(() => import("@/componests/CardDestop"), {
   ssr: false,
@@ -21,6 +19,7 @@ const CardMobile = dynamic(() => import("@/componests/CardMobile"), {
 
 const RatedPage = () => {
   useGuestSession();
+  const base_url = process.env.NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL;
 
   const [guestSessionId, setGuestSessionId] = useState<string | null>(null);
   const [rateStatus, setRateStatus] = useState<boolean>(true);
@@ -28,40 +27,38 @@ const RatedPage = () => {
   const search = useSearchParams()!;
   const page = Number(search.get("page") || "1");
 
-  const base_url = process.env.NEXT_PUBLIC_CLIENT_IMAGE_BASE_URL;
-  const {mutate} = useSWR(
-    guestSessionId || page ? getRateMoviesSWRKey(guestSessionId, page) : null,
-  );
-  const { ratedData,isLoading,error } = useRated(Number(page));
 
-  useEffect(() => {
+   const { ratedData, isLoading, error } = useRated(guestSessionId,Number(page));
+
+   useEffect(() => {
     if (typeof window != "undefined") {
-     const guestId =  localStorage.getItem("guest_session_id");
+      const guestId = localStorage.getItem("guest_session_id");
       setGuestSessionId(guestId);
     }
   }, []);
 
-  useEffect(() => {
-    if (guestSessionId && mutate) {
-      mutate(); // revalidate current SWR key
-    }
-  }, [guestSessionId, page, mutate]);
+ //យើងលុបចោលទុកឲ្យ mutate ពី useRate អ្នកធ្វើការ
+  // useEffect(() => {
+  //   if (guestSessionId && mutate) {
+  //     mutate(); // revalidate current SWR key
+  //   }
+  // }, [guestSessionId, page, mutate]);
 
   // mutate( undefined, { revalidate: true });
 
-// Loading state
-  if (isLoading) {
+  // Loading state
+  if (!guestSessionId || isLoading) {
     return <Skeleton active />;
   }
 
   // Error state
   if (error) {
     return (
-      <Alert 
-        message="Failed to load rated movies" 
+      <Alert
+        message="Failed to load rated movies"
         description={error.message || "Unknown error occurred"}
-        type="error" 
-        className="text-lg" 
+        type="error"
+        className="text-lg"
       />
     );
   }
@@ -69,11 +66,7 @@ const RatedPage = () => {
   // No data returned
   if (!ratedData) {
     return (
-      <Alert 
-        message="No data available" 
-        type="info" 
-        className="text-lg" 
-      />
+      <Alert message="No data available" type="info" className="text-lg" />
     );
   }
 
@@ -88,7 +81,6 @@ const RatedPage = () => {
       />
     );
   }
-
 
   const statusDelete = (e: boolean) => {
     if (!e) {

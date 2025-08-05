@@ -27,9 +27,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "No API Key." });
   }
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 5000); // 5 seconds
-
   const endpointUrl = BASE_URL
     ? `${BASE_URL}/guest_session/${guestSession}/rated/movies?api_key=${API_KEY}&page=${page}`
     : null;
@@ -42,7 +39,7 @@ export async function GET(req: NextRequest) {
       Authorization: `Bearer ${TOKEN}`,
       "Content-Type": "application/json",
     },
-    signal: controller.signal,
+   
   };
 
   if (!endpointUrl) {
@@ -55,7 +52,6 @@ export async function GET(req: NextRequest) {
   try {
     const response = await fetch(endpointUrl, options);
 
-    clearTimeout(timeout);
 
     if (!response.ok) {
       return NextResponse.json(

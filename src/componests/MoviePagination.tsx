@@ -4,7 +4,7 @@ import { MovieApiResponse } from "@/types/MovieApiResponse";
 import { useMovie } from "@/hooks/useMovie";
 import { Skeleton } from "antd";
 import { useRated } from "@/hooks/useRated";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import dynamic from "next/dynamic";
 
 const PaginationPage = dynamic(() => import("@/componests/PaginationPage"), {
@@ -29,6 +29,7 @@ const MoviePagination = () => {
 
   // Get the current page from URL. If not present, use the cached page for the current content type.
   const currentPageFromUrl = Number(searchParams.get("page") || "1");
+  const [guestSessionId, setGuestSessionId] = useState<string | null>(null);
 
   const { data } = useMovie(
     query,
@@ -38,7 +39,15 @@ const MoviePagination = () => {
       : "discover",
   );
 
-  const { ratedData } = useRated(currentPageFromUrl); // useRated should use the numeric current page
+  useEffect(() => {
+    if (typeof window != "undefined") {
+      const guestId = localStorage.getItem("guest_session_id");
+      setGuestSessionId(guestId);
+    }
+  }, []);
+
+
+  const { ratedData } = useRated(guestSessionId, currentPageFromUrl); // useRated should use the numeric current page
 
   const paginationInitail = isRatedPage ? ratedData : data;
 
@@ -55,7 +64,7 @@ const MoviePagination = () => {
       params.delete("page");
       router.replace(`${pathname}?${params.toString()}`);
     }
-  }, [query]);
+  }, [query,pathname,router,searchParams]);
 
   const handleChangePage = (newPage: number) => {
     const params = new URLSearchParams(searchParams.toString());
