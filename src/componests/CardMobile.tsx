@@ -32,7 +32,7 @@ const CardMobile = ({
   genres,
   movieId,
   deleteBtnId,
-  onSuccess
+  onSuccess,
 }: CardProps) => {
   const [imageLoading, setImageLoading] = useState(false);
   return (
@@ -90,9 +90,7 @@ const CardMobile = ({
           {movieId && (
             <div className="flex mt-2 items-center whitespace-nowrap justify-end">
               <Suspense fallback={<Spin size="small" />}>
-                <VoteStar movieId={movieId}
-                  onSuccess={onSuccess}
-                />
+                <VoteStar movieId={movieId} onSuccess={onSuccess} />
               </Suspense>
             </div>
           )}
@@ -106,7 +104,9 @@ const CardMobile = ({
         )}
 
         {/* Delete button for card */}
-        {deleteBtnId && <CancelBtn id={String(deleteBtnId)} onSuccess={onSuccess} />}
+        {deleteBtnId && (
+          <CancelBtn id={String(deleteBtnId)} onSuccess={onSuccess} />
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
-export type CardProps  ={
-    src: string;
+export type CardProps = {
+  src: string;
   title: string;
   releaseDate: string;
   overview: string;
@@ -8,5 +8,5 @@ export type CardProps  ={
   genres: number[];
   movieId?: string;
   deleteBtnId?: number;
-  onSuccess?: (success:boolean)=> void
-}
+  onSuccess?: (success: boolean) => void;
+};

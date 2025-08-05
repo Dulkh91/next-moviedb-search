@@ -1,9 +1,13 @@
 # folder hooks
+
 Using to keep file as like as : useSubmitMovieRating, useDeleteRated,useMovie,useRated,getData
+
 ## file name
+
 - **hooks/useSubmitMovieRating.ts**
+
 ```ts
-'use client';
+"use client";
 import useSWRMutation from "swr/mutation";
 
 interface SubmitMovieRatingArgs {
@@ -11,10 +15,12 @@ interface SubmitMovieRatingArgs {
   guestSession: string;
   rating: number;
 }
-const ratingFetcher = async( url: string, {arg}:{arg:SubmitMovieRatingArgs})=>{
-
-    const { movieId, guestSession, rating } = arg;
-     // Validate inputs
+const ratingFetcher = async (
+  url: string,
+  { arg }: { arg: SubmitMovieRatingArgs },
+) => {
+  const { movieId, guestSession, rating } = arg;
+  // Validate inputs
   if (!guestSession) {
     throw new Error("Guest session ID is required.");
   }
@@ -26,57 +32,59 @@ const ratingFetcher = async( url: string, {arg}:{arg:SubmitMovieRatingArgs})=>{
   }
 
   try {
-    const endpointUrl = `${url}/${movieId}/rating?guest_session_id=${guestSession}`
+    const endpointUrl = `${url}/${movieId}/rating?guest_session_id=${guestSession}`;
 
     const response = await fetch(endpointUrl, {
-    method: "POST",
-    headers: {
-       accept: 'application/json',
-       "Content-Type": "application/json;charset=utf-8",
-       Authorization: `Bearer ${process.env.NEXT_PUBLIC_CLIENT_TOKEN_KEY}`,
-       },
-      body:JSON.stringify({"value":rating})
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json;charset=utf-8",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_CLIENT_TOKEN_KEY}`,
+      },
+      body: JSON.stringify({ value: rating }),
     });
-  
-  if (!response.ok) {
-    const errorData = await response.json().catch(()=>{})
-    return{
-      success: false,
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => {});
+      return {
+        success: false,
         error: errorData.status_message || `Failed to rate: ${response.status}`,
+      };
     }
-   
-  }
 
-  const data = await response.json();
-  return { success: true, data };
-
+    const data = await response.json();
+    return { success: true, data };
   } catch (error) {
-       console.error("Rate movie error:", error);
+    console.error("Rate movie error:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Unknown error occurred",
     };
-  
   }
-
-}
+};
 
 export const useSubmitMovieRating = () => {
-    const url = process.env.NEXT_PUBLIC_CLIENT_WEB_URL
-    const {trigger, isMutating} = useSWRMutation(`${url}/movie`, ratingFetcher, {
-        populateCache: false
-    })
+  const url = process.env.NEXT_PUBLIC_CLIENT_WEB_URL;
+  const { trigger, isMutating } = useSWRMutation(
+    `${url}/movie`,
+    ratingFetcher,
+    {
+      populateCache: false,
+    },
+  );
 
-    return {
-        submitRating: trigger,
-        isSubmitting: isMutating,
-    }
-}
- ```
- ---
- - **hooks/useDeleteRated.ts**
- ```ts
+  return {
+    submitRating: trigger,
+    isSubmitting: isMutating,
+  };
+};
+```
 
+---
+
+- **hooks/useDeleteRated.ts**
+
+```ts
 import useSWRMutation from "swr/mutation";
 
 interface DeleteMovieRatingArgs {
@@ -86,7 +94,7 @@ interface DeleteMovieRatingArgs {
 
 const fetcher = async (
   url: string,
-  { arg }: { arg: DeleteMovieRatingArgs }
+  { arg }: { arg: DeleteMovieRatingArgs },
 ) => {
   const { movieId, guestSession } = arg;
 
@@ -98,10 +106,10 @@ const fetcher = async (
   const endpointUrl = `${cleanUrl}/${movieId}`;
 
   /*
-  នេះអាចកាត់បញ្ហា / ជាប់ពី url ពេញ
-  endpointUrl = url + "/" + movieId ស្មើ undefined/ ប្រសិនមិនផ្ញើ arg
-  */
-  try {  
+ នេះអាចកាត់បញ្ហា / ជាប់ពី url ពេញ
+ endpointUrl = url + "/" + movieId ស្មើ undefined/ ប្រសិនមិនផ្ញើ arg
+ */
+  try {
     const option = {
       method: "DELETE",
       headers: {
@@ -109,9 +117,8 @@ const fetcher = async (
       },
       body: JSON.stringify({ guest_session_id: guestSession }),
     };
-  
-    const response = await fetch(endpointUrl, option);
 
+    const response = await fetch(endpointUrl, option);
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -132,20 +139,21 @@ const fetcher = async (
 };
 
 export function useDeleteRated() {
-
   const { trigger: deleteRate, isMutating: isDeleting } = useSWRMutation(
     `/api/rated/`,
     fetcher,
     {
       populateCache: false,
       revalidate: true,
-    }
+    },
   );
 
   return { deleteRate, isDeleting };
 }
 ```
+
 ---
+
 - **hooks/useMovie**
 
 ```ts
@@ -179,49 +187,48 @@ export const useMovie = (query: string, page: string, type: string) => {
 
 //note.docs
 ```
+
 ---
+
 - **hooks/useRated.ts**
+
 ```ts
-'use client'
+"use client";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-
-const fetcher = async (url:string, {arg}:{arg:string}) => {
-
+const fetcher = async (url: string, { arg }: { arg: string }) => {
   const response = await fetch(url, {
     headers: { "Content-Type": "application/json" },
   });
-  if(!response.ok){
-    throw new Error(`Failed to fetch: ${response.statusText} (${response.status})`);
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch: ${response.statusText} (${response.status})`,
+    );
   }
 
-  return response.json()
-
+  return response.json();
 };
 
 export const useRated = () => {
-  
   const [guestSessionId, setGuestSessionId] = useState<string | null>(null);
-  useEffect(()=>{
-      if(typeof window !=="undefined"){
-          const sessionId = localStorage.getItem('guest_session_id');
-          if(sessionId){
-            setGuestSessionId(sessionId)
-          }
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const sessionId = localStorage.getItem("guest_session_id");
+      if (sessionId) {
+        setGuestSessionId(sessionId);
       }
-  },[])
+    }
+  }, []);
 
-  
   const URL = guestSessionId
-    ? `/api/rated?guest_session_id=${guestSessionId}`: null;
+    ? `/api/rated?guest_session_id=${guestSessionId}`
+    : null;
 
-
-  const { data, isLoading, error} = useSWR(URL, fetcher,{
-    revalidateOnFocus: false, 
+  const { data, isLoading, error } = useSWR(URL, fetcher, {
+    revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
-
 
   if (!guestSessionId || isLoading || !data) {
     return { ratedData: [], isLoading: true };
@@ -230,12 +237,15 @@ export const useRated = () => {
   if (error) {
     return { ratedData: [], ratePage: 0, isLoading: false, error };
   }
-  
+
   return { ratedData: data || [], ratePage: data.total_results, isLoading };
 };
 ```
+
 ---
+
 - **lip/getData.ts**
+
 ```ts
 export const getData = async () => {
   const clientApiKey = process.env.NEXT_PUBLIC_CLIENT_WEB_URL;
@@ -265,8 +275,11 @@ export const getData = async () => {
   }
 };
 ```
---- 
+
+---
+
 - **context/PaginationContext.tsx**
+
 ```ts
 "use client";
 import React, { createContext, useContext, useState } from "react";
@@ -332,9 +345,11 @@ export const usePaginationContext = () => {
   return context;
 };
 ```
+
 ប្រើជាមួយ useStorage.ts file
 
 - **useStorage.ts**
+
 ```ts
 import { usePaginationContext } from "@/context/PaginationContext";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -368,7 +383,9 @@ const useStorePage = () => {
 
 export default useStorePage;
 ```
+
 - **layout.ts**
+
 ```ts
 import Navbar from "@/componests/Navbar";
 import { PaginationProvider } from "@/context/PaginationContext";

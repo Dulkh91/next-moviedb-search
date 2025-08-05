@@ -8,7 +8,7 @@ interface SubmitMovieRatingArgs {
 
 const fetcher = async (
   url: string,
-  { arg }: { arg: SubmitMovieRatingArgs }
+  { arg }: { arg: SubmitMovieRatingArgs },
 ) => {
   const { movieId, guestSession, rating } = arg;
 
@@ -25,7 +25,7 @@ const fetcher = async (
 
   try {
     const endpointUrl = `${url}/${movieId}?guest_session_id=${guestSession}`;
-    
+
     const option = {
       method: "POST",
       headers: {
@@ -57,7 +57,6 @@ const fetcher = async (
 };
 
 export function useSubmitMovieRating() {
-
   const { trigger, isMutating } = useSWRMutation(`api/rated/`, fetcher, {
     populateCache: false,
     revalidate: true,

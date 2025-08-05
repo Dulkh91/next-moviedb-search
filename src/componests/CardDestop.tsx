@@ -86,9 +86,7 @@ const CardDesktop = ({
             {movieId && (
               <div className="flex mt-2 items-center whitespace-nowrap">
                 <Suspense fallback={<Spin size="small" />}>
-                  <VoteStar movieId={movieId}
-                    onSuccess={onSuccess}
-                    />
+                  <VoteStar movieId={movieId} onSuccess={onSuccess} />
                 </Suspense>
               </div>
             )}
@@ -104,7 +102,9 @@ const CardDesktop = ({
         </div>
       )}
       {/* Delete button for card */}
-      {deleteBtnId && <CancelBtn id={String(deleteBtnId)} onSuccess={onSuccess} />}
+      {deleteBtnId && (
+        <CancelBtn id={String(deleteBtnId)} onSuccess={onSuccess} />
+      )}
     </div>
   );
 };

@@ -1,4 +1,3 @@
-
 import useSWRMutation from "swr/mutation";
 
 interface DeleteMovieRatingArgs {
@@ -8,7 +7,7 @@ interface DeleteMovieRatingArgs {
 
 const fetcher = async (
   url: string,
-  { arg }: { arg: DeleteMovieRatingArgs }
+  { arg }: { arg: DeleteMovieRatingArgs },
 ) => {
   const { movieId, guestSession } = arg;
 
@@ -23,7 +22,7 @@ const fetcher = async (
   នេះអាចកាត់បញ្ហា / ជាប់ពី url ពេញ
   endpointUrl = url + "/" + movieId ស្មើ undefined/ ប្រសិនមិនផ្ញើ arg
   */
-  try {  
+  try {
     const option = {
       method: "DELETE",
       headers: {
@@ -31,9 +30,8 @@ const fetcher = async (
       },
       body: JSON.stringify({ guest_session_id: guestSession }),
     };
-  
-    const response = await fetch(endpointUrl, option);
 
+    const response = await fetch(endpointUrl, option);
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -54,14 +52,13 @@ const fetcher = async (
 };
 
 export function useDeleteRated() {
-
   const { trigger: deleteRate, isMutating: isDeleting } = useSWRMutation(
     `/api/rated/`,
     fetcher,
     {
       populateCache: false,
       revalidate: true,
-    }
+    },
   );
 
   return { deleteRate, isDeleting };

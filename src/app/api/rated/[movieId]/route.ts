@@ -2,10 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
   req: NextRequest,
-  context: { params: Promise<{ movieId: string }> }
+  context: { params: Promise<{ movieId: string }> },
 ) {
-  
-
   const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_WEB_URL;
   const TOKEN = process.env.NEXT_PUBLIC_CLIENT_TOKEN_KEY;
   const API_KEY = process.env.API_KEY;
@@ -16,17 +14,17 @@ export async function DELETE(
   }
   const body = await req.json();
   const guestSession = body.guest_session_id;
-  console.log("route:::",movieId);
+  console.log("route:::", movieId);
   if (!guestSession) {
     return NextResponse.json(
       { error: "guest_session_id: not found!" },
-      { status: 400 }
+      { status: 400 },
     );
   }
   if (!TOKEN || !BASE_URL) {
     return NextResponse.json(
       { error: "No Token or base url found" },
-      { status: 400 }
+      { status: 400 },
     );
   }
   if (!API_KEY) {
@@ -35,7 +33,7 @@ export async function DELETE(
   if (!movieId) {
     return NextResponse.json(
       { error: "The id movie request" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -65,7 +63,7 @@ export async function DELETE(
           status: response.status,
           details: data,
         },
-        { status: response.status }
+        { status: response.status },
       );
     }
 
@@ -77,14 +75,14 @@ export async function DELETE(
     console.error("Delete rated failed", error);
     return NextResponse.json(
       { error: "Failed to delete rated" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function POST(
   req: NextRequest,
-  context: { params: Promise<{ movieId: string }> }
+  context: { params: Promise<{ movieId: string }> },
 ) {
   const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_WEB_URL;
   const TOKEN = process.env.NEXT_PUBLIC_CLIENT_TOKEN_KEY;
@@ -96,26 +94,26 @@ export async function POST(
   if (!BASE_URL || !TOKEN || !API_KEY) {
     return NextResponse.json(
       { error: "Missing environment variables" },
-      { status: 400 }
+      { status: 400 },
     );
   }
   const { movieId } = await context.params;
   if (!movieId) {
     return NextResponse.json(
       { error: "Movie ID is required" },
-      { status: 400 }
+      { status: 400 },
     );
   }
   if (!guestSession) {
     return NextResponse.json(
       { error: "guest_session_id is required" },
-      { status: 400 }
+      { status: 400 },
     );
   }
   if (valueRate < 0.5 || valueRate > 10 || valueRate % 0.5 !== 0) {
     return NextResponse.json(
       { error: "Rating must be between 0.5 and 10 (step 0.5)" },
-      { status: 400 }
+      { status: 400 },
     );
   }
   const controller = new AbortController();
@@ -141,7 +139,7 @@ export async function POST(
     if (!response.ok) {
       return NextResponse.json(
         { error: "Failed to create rating", details: data },
-        { status: response.status }
+        { status: response.status },
       );
     }
     console.log(data);
@@ -153,7 +151,7 @@ export async function POST(
     console.error("Failed to create rating", error);
     return NextResponse.json(
       { error: "Failed to create rating" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

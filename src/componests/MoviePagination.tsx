@@ -30,7 +30,7 @@ const MoviePagination = () => {
   // Get the current page from URL. If not present, use the cached page for the current content type.
   const currentPageFromUrl = Number(searchParams.get("page") || "1");
 
-  const { data} = useMovie(
+  const { data } = useMovie(
     query,
     String(currentPageFromUrl),
     contentType === "search" || contentType === "home"
@@ -38,8 +38,7 @@ const MoviePagination = () => {
       : "discover",
   );
 
-
-  const { ratedData} = useRated(currentPageFromUrl); // useRated should use the numeric current page
+  const { ratedData } = useRated(currentPageFromUrl); // useRated should use the numeric current page
 
   const paginationInitail = isRatedPage ? ratedData : data;
 
@@ -50,7 +49,6 @@ const MoviePagination = () => {
     total_results: 0,
   };
 
-
   useEffect(() => {
     if (query && searchParams.has("page")) {
       const params = new URLSearchParams(searchParams.toString());
@@ -58,7 +56,6 @@ const MoviePagination = () => {
       router.replace(`${pathname}?${params.toString()}`);
     }
   }, [query]);
-
 
   const handleChangePage = (newPage: number) => {
     const params = new URLSearchParams(searchParams.toString());

@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
   if (!endpointUrl) {
     return NextResponse.json(
       { error: "Base URL is not defined" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -60,7 +60,7 @@ export async function GET(req: NextRequest) {
     if (!response.ok) {
       return NextResponse.json(
         { error: "Failed to fetch rated movies", status: response.status },
-        { status: response.status }
+        { status: response.status },
       );
     }
     const data = await response.json();
@@ -70,7 +70,7 @@ export async function GET(req: NextRequest) {
     console.error("Error fetching rated movies:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

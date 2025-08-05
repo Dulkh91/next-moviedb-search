@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Rate } from "antd";
 import { useRated } from "@/hooks/useRated";
 import { Movie } from "@/types/movie";
@@ -8,6 +8,7 @@ import { getRateMoviesSWRKey } from "@/utils/getRateMoviesSWRKey";
 import { MovieApiResponse } from "@/types/MovieApiResponse";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
+import { throttle } from "lodash";
 
 type Props = {
   movieId: string;
@@ -15,28 +16,42 @@ type Props = {
 };
 
 const VoteStar = ({ movieId, onSuccess }: Props) => {
-  
   const [rating, setRating] = useState<number>(0);
   const { submitRating, isSubmitting } = useSubmitMovieRating();
   const [guestSessionId, setGuestSessionId] = useState<string | null>(null);
-  const searchParams = useSearchParams()
-  const page = Number(searchParams.get("page") || "1")
+  const searchParams = useSearchParams();
+  const page = Number(searchParams.get("page") || "1");
 
-  const {mutate} = useSWR(guestSessionId || page ?getRateMoviesSWRKey(guestSessionId,page):null)
+  const { mutate } = useSWR(
+    guestSessionId || page ? getRateMoviesSWRKey(guestSessionId, page) : null,
+  );
   const { ratedData, isLoading } = useRated(Number(page));
 
+
+   // Initialize guest session
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const sessionId = localStorage.getItem("guest_session_id");
+      if (sessionId) {
+        setGuestSessionId(sessionId);
+      }
+    }
+  }, []);
+
+  // set existing rating if found
   useEffect(() => {
     if (!movieId) return; // ប្រសិនបើ movieId មិនមានទេ កុំធ្វើអ្វី
 
     if (typeof ratedData !== "undefined" && !isLoading && ratedData.results) {
       const found = ratedData.results.find(
-        (m: Movie) => String(m.id) === String(movieId)
+        (m: Movie) => String(m.id) === String(movieId),
       );
       if (found) {
         setRating(found.rating);
       }
     }
   }, [ratedData, isLoading, movieId]);
+
 
   const handleRate = async (value: number) => {
     try {
@@ -66,29 +81,39 @@ const VoteStar = ({ movieId, onSuccess }: Props) => {
         onSuccess?.(false);
       } else {
         onSuccess?.(true);
-         setRating(value);
+        setRating(value);
 
         mutate((currentData: MovieApiResponse | undefined) => {
-            if (!currentData) return currentData;
-
-            return {
-              ...currentData,
-              results: currentData.results.map((movie) =>
-                String(movie.id) === movieId ? { ...movie, rating: value } : movie
-              ),
-            };
-          },
-          false
-        );
-
+          if (!currentData) return currentData;
+          return {
+            ...currentData,
+            results: currentData.results.map((movie) =>
+              String(movie.id) === movieId
+                ? { ...movie, rating: value }
+                : movie,
+            ),
+          };
+        }, false);
       }
-
-
     } catch (error) {
       console.error("Failed to rate:", error);
       onSuccess?.(false);
     }
   };
+  const throttledRateStar = useCallback(
+    throttle((value:number)=>{handleRate(value)},1000,
+    {
+      loading: true, //Execute ភ្លាមនៅ call ដំបូង
+      trailing: false, //មិន execute ក្រោយ delay
+    }
+  ),[guestSessionId, movieId]) 
+
+  useEffect(() => {
+    return () => {
+      throttledRateStar.cancel();
+    };
+  }, [throttledRateStar]);
+
 
   return (
     <Rate
@@ -97,7 +122,7 @@ const VoteStar = ({ movieId, onSuccess }: Props) => {
       value={rating}
       style={{ fontSize: 18 }}
       className={`flex flex-row custom-rate `}
-      onChange={handleRate}
+      onChange={throttledRateStar}
       disabled={isSubmitting}
     />
   );

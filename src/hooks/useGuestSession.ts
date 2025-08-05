@@ -6,12 +6,12 @@ const useGuestSession = () => {
 
   useEffect(() => {
     const saved = localStorage.getItem("guest_session_id");
-    const expire = localStorage.getItem("expire_at")
+    const expire = localStorage.getItem("expire_at");
     if (saved && expire) {
       const currentTime = new Date().getTime();
       const expireTime = new Date(expire).getTime();
 
-      if (expireTime >currentTime) {
+      if (expireTime > currentTime) {
         setGuestId(saved);
         return;
       }
@@ -21,9 +21,8 @@ const useGuestSession = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.guest_session_id) {
+          localStorage.setItem("expire_at", data.expires_at);
 
-          localStorage.setItem("expire_at",data.expires_at)
-          
           localStorage.setItem("guest_session_id", data.guest_session_id);
           setGuestId(data.guest_session_id);
         }

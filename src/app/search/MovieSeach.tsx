@@ -17,7 +17,7 @@ const CardMobile = dynamic(() => import("@/componests/CardMobile"), {
 
 const MovieSearchPage = () => {
   const { width } = useWindowSize();
-  const [rateStatus, setRateStatus] = useState<boolean>(true) 
+  const [rateStatus, setRateStatus] = useState<boolean>(true);
   const searchParams = useSearchParams() as ReadonlyURLSearchParams;
   const query = searchParams.get("query") || "";
   const page = searchParams.get("page") || "1";
@@ -50,14 +50,13 @@ const MovieSearchPage = () => {
     );
   }
 
-  const statusRating = (e:boolean)=>{
-      if(!e){
-          setRateStatus(e)
-      }else{
-        setRateStatus(e)
-      }
-  }
-
+  const statusRating = (e: boolean) => {
+    if (!e) {
+      setRateStatus(e);
+    } else {
+      setRateStatus(e);
+    }
+  };
 
   return (
     <>
@@ -108,17 +107,20 @@ const MovieSearchPage = () => {
           );
         })}
       </Flex>
-        
-  {/* Message of error rate star */}
-    <div className={`fixed top-1/2 left-1/2  transform -translate-x-1/2 -translate-y-1/2 
-        ${rateStatus?'hidden':''}
-      `}>
-      <Alert type="error" message="Server error! Rating the movie failed; please try again." banner 
-        onClick={()=>setRateStatus(true)}
-      />
-    </div>
-          
-         
+
+      {/* Message of error rate star */}
+      <div
+        className={`fixed top-1/2 left-1/2  transform -translate-x-1/2 -translate-y-1/2 
+        ${rateStatus ? "hidden" : ""}
+      `}
+      >
+        <Alert
+          type="error"
+          message="Server error! Rating the movie failed; please try again."
+          banner
+          onClick={() => setRateStatus(true)}
+        />
+      </div>
 
       {/* Float button for "Back to Top" functionality */}
       <FloatButton.Group shape="circle" className="float_btn-edit">

@@ -9,67 +9,66 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { useDeleteRated } from "@/hooks/useDeleteRated";
 import { useSearchParams } from "next/navigation";
 
-type Props ={
-  id:string,
-  onSuccess?: (success: boolean)=>void
-}
+type Props = {
+  id: string;
+  onSuccess?: (success: boolean) => void;
+};
 
-const DeleteBtn = ({ id, onSuccess }:Props) => {
+const DeleteBtn = ({ id, onSuccess }: Props) => {
   const [guestSessionId, setGuestSessionId] = useState<string | null>(null);
-  const searchParams = useSearchParams()
-  const page = Number(searchParams.get("page") || "1")
+  const searchParams = useSearchParams();
+  const page = Number(searchParams.get("page") || "1");
 
-  const {mutate} = useSWR(guestSessionId|| page? getRateMoviesSWRKey(guestSessionId,page) : null, {
-        revalidateOnFocus: false, 
-    });
-  const {deleteRate,isDeleting } = useDeleteRated()
-  
+  const { mutate } = useSWR(
+    guestSessionId || page ? getRateMoviesSWRKey(guestSessionId, page) : null,
+    {
+      revalidateOnFocus: false,
+    },
+  );
+  const { deleteRate, isDeleting } = useDeleteRated();
 
-  useEffect(()=>{
-    if(typeof window !== 'undefined'){
-      setGuestSessionId(localStorage.getItem("guest_session_id"))
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setGuestSessionId(localStorage.getItem("guest_session_id"));
     }
-  },[])
+  }, []);
 
   const handleDelete = async () => {
     try {
-      
       if (!guestSessionId) {
         alert("The guestion sesstion not found.");
         return;
       }
 
       // លុប rating តាមរយៈ API
-    const result = await deleteRate({
-      movieId: id,
-      guestSession: guestSessionId
-     })
+      const result = await deleteRate({
+        movieId: id,
+        guestSession: guestSessionId,
+      });
 
-     if(!result.success){
-        onSuccess?.(false)
-     }else{
-      onSuccess?.(true)
+      if (!result.success) {
+        onSuccess?.(false);
+      } else {
+        onSuccess?.(true);
 
-         mutate((currentData: MovieApiResponse | undefined) => {
-          if (!currentData) return currentData;
-          
-          return {
-            ...currentData,
-            results: currentData.results.filter(
-              (movie) => String(movie.id) !== id,
-            ),
-          };
-        },
-        false, // មិន revalidate ភ្លាម
-      );
+        mutate(
+          (currentData: MovieApiResponse | undefined) => {
+            if (!currentData) return currentData;
 
-     }
-    
-
+            return {
+              ...currentData,
+              results: currentData.results.filter(
+                (movie) => String(movie.id) !== id,
+              ),
+            };
+          },
+          false, // មិន revalidate ភ្លាម
+        );
+      }
     } catch (err) {
       console.error("បរាជ័យក្នុងការលុប rating", err);
-      onSuccess?.(false)
-    } 
+      onSuccess?.(false);
+    }
   };
 
   return (
