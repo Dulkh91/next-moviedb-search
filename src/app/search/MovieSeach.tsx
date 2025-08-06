@@ -26,7 +26,7 @@ const MovieSearchPage = () => {
   const { data, isLoading, error } = useMovie(
     query,
     page,
-    query ? "search" : "discover" //កំណត់ថា type ប្រសិនបើ query មិនបានបញ្ចូលទិន្ន័យផ្ទេទៅ discover
+    query ? "search" : "discover", //កំណត់ថា type ប្រសិនបើ query មិនបានបញ្ចូលទិន្ន័យផ្ទេទៅ discover
   );
 
   if (error) {

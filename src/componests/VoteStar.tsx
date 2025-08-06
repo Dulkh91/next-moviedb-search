@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { Rate,Alert } from "antd";
+import { Rate, Alert } from "antd";
 import { useRated } from "@/hooks/useRated";
 import { Movie } from "@/types/movie";
 import { useSubmitMovieRating } from "@/hooks/useRatingMovie";
@@ -32,7 +32,7 @@ const VoteStar = ({ movieId, onSuccess }: Props) => {
     }
   }, []);
 
-  const { ratedData, isLoading,error, mutate } = useRated(
+  const { ratedData, isLoading, error, mutate } = useRated(
     guestSessionId,
     Number(page),
   );
@@ -51,7 +51,6 @@ const VoteStar = ({ movieId, onSuccess }: Props) => {
     }
   }, [ratedData, isLoading, movieId]);
 
-  
 
   const handleRate = async (value: number) => {
     try {
@@ -119,21 +118,19 @@ const VoteStar = ({ movieId, onSuccess }: Props) => {
       throttledRateStar.cancel();
     };
   }, [throttledRateStar]);
-  
-if(error){
-    if(error instanceof ApiEror){
+
+  if (error) {
+    if (error instanceof ApiEror) {
       return (
-      <Alert
-        message={`Error: ${error.status}`}
-        description={error.message}
-        type="error"
-        className="text-lg"
-      />
-    )
+        <Alert
+          message={`Error: ${error.status}`}
+          description={error.message}
+          type="error"
+          className="text-lg"
+        />
+      );
     }
   }
-
-  
 
   return (
     <Rate
