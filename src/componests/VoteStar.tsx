@@ -51,7 +51,6 @@ const VoteStar = ({ movieId, onSuccess }: Props) => {
     }
   }, [ratedData, isLoading, movieId]);
 
-
   const handleRate = async (value: number) => {
     try {
       let sessionId = guestSessionId;

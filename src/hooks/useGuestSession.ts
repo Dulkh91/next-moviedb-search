@@ -1,33 +1,44 @@
-// Save to localStorage
 import { useState, useEffect } from "react";
 
 const useGuestSession = () => {
   const [guestId, setGuestId] = useState<string | null>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem("guest_session_id");
-    const expire = localStorage.getItem("expire_at");
-    if (saved && expire) {
-      const currentTime = new Date().getTime();
-      const expireTime = new Date(expire).getTime();
+    const fetchGuestSession = async () => {
+      const saved = localStorage.getItem("guest_session_id");
+      const expireStr = localStorage.getItem("expire_at");
 
-      if (expireTime > currentTime) {
-        setGuestId(saved);
-        return;
-      }
-    }
+      if (saved && expireStr) {
+        const expireTime = Number(expireStr);
+        const currentTime = new Date().getTime(); // ពេលវេលាបច្ចុប្បន្ន
 
-    fetch("api/guest-session")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.guest_session_id) {
-          localStorage.setItem("expire_at", data.expires_at);
-
-          localStorage.setItem("guest_session_id", data.guest_session_id);
-          setGuestId(data.guest_session_id);
+        // ប្រសិនបើពេលវេលាផុតកំណត់ធំជាងពេលវេលាបច្ចុប្បន្ន
+        if (expireTime > currentTime) {
+          setGuestId(saved);
+          return;
         }
-      })
-      .catch((error) => console.error("Failed to create guest session", error));
+      }
+
+      // ប្រសិនបើមិនមាន session ឬ session អស់សុពលភាព
+      try {
+        const res = await fetch("/api/guest-session");
+        const data = await res.json();
+        
+        if (data.guest_session_id) {
+          const expiresAt = new Date(data.expires_at).getTime();
+          
+          localStorage.setItem("expire_at", String(expiresAt));
+          if(!saved){
+            localStorage.setItem("guest_session_id", data.guest_session_id);
+            setGuestId(data.guest_session_id);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to create guest session", error);
+      }
+    };
+
+    fetchGuestSession();
   }, []);
 
   return guestId;

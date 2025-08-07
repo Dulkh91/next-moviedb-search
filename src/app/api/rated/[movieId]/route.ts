@@ -14,7 +14,7 @@ export async function DELETE(
   }
   const body = await req.json();
   const guestSession = body.guest_session_id;
-  
+
   if (!guestSession) {
     return NextResponse.json(
       { error: "guest_session_id: not found!" },

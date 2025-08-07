@@ -2,7 +2,7 @@
 import { Pagination } from "antd";
 
 type Props = {
-  totalItems: number;
+  // totalItems: number;
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
@@ -10,19 +10,23 @@ type Props = {
 };
 
 const PAGE_SIZE = 20;
+const API_PAGE_LIMIT = 500; // ដែនកំណត់ទំព័ររបស់ TMDb API
 const PaginationPage = ({
-  totalItems,
+  // totalItems,
   totalPages,
   currentPage,
   onPageChange,
   isLoading = false,
 }: Props) => {
-  if (totalPages < 2 || typeof totalPages === "undefined") return null; // hide if only 1 page
+  // ប្រើតម្លៃទំព័រតូចជាងគេរវាង totalPages របស់ API និង 500
+  const limitedTotalPages = Math.min(totalPages, API_PAGE_LIMIT);
+  const limitedTotalItems = limitedTotalPages * PAGE_SIZE;
+  if (limitedTotalPages < 2 || typeof totalPages === "undefined") return null; // hide if only 1 page
   return (
     <div className="flex justify-center mt-4">
       <Pagination
-        total={totalItems}
-        defaultPageSize={PAGE_SIZE}
+        total={limitedTotalItems}
+        defaultPageSize={PAGE_SIZE}  
         current={currentPage}
         onChange={onPageChange}
         showSizeChanger={false}

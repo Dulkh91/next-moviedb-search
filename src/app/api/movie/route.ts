@@ -43,7 +43,7 @@ export const GET = async (req: NextRequest) => {
     if (type === "search") {
       url += `query=${encodeURIComponent(query)}&page=${page}&api_key=${apiKey}`;
     }
-    url += `page=${page}&api_key=${apiKey}`;
+    url += `?sort_by=popularity.desc&with_genres=28&page=${page}&api_key=${apiKey}`;
 
     const response = await fetch(`${url}`, {
       headers: { Authorization: `Bearer ${token}` },

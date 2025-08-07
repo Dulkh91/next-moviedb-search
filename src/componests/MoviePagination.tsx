@@ -76,7 +76,7 @@ const MoviePagination = () => {
 
   return (
     <PaginationPage
-      totalItems={paginationData.total_results}
+      // totalItems={paginationData.total_results}
       totalPages={paginationData.total_pages}
       currentPage={Number(currentPageFromUrl)}
       onPageChange={handleChangePage}

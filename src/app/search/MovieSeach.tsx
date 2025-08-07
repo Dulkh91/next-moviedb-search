@@ -8,6 +8,7 @@ import noImage from "../../../public/noImage.svg";
 import { useWindowSize } from "@/hooks/useWindow";
 import { useState } from "react";
 import { ApiEror } from "@/utils/customError";
+import useGuestSession from "@/hooks/useGuestSession";
 
 const CardDesktop = dynamic(() => import("@/componests/CardDestop"), {
   ssr: false,
@@ -17,6 +18,8 @@ const CardMobile = dynamic(() => import("@/componests/CardMobile"), {
 });
 
 const MovieSearchPage = () => {
+  
+  useGuestSession()
   const { width } = useWindowSize();
   const [rateStatus, setRateStatus] = useState<boolean>(true);
   const searchParams = useSearchParams() as ReadonlyURLSearchParams;
