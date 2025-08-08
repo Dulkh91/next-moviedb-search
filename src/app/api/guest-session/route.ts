@@ -6,6 +6,7 @@ export const GET = async () => {
   const res = await fetch(
     `https://api.themoviedb.org/3/authentication/guest_session/new?api_key=${USER_API_KEY}`,
   );
+  const data = await res.json();
 
   if (!res.ok) {
     return NextResponse.json(
@@ -14,6 +15,5 @@ export const GET = async () => {
     );
   }
 
-  const data = await res.json();
   return NextResponse.json(data); // includes guest_session_id
 };

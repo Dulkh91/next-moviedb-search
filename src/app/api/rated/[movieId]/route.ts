@@ -78,6 +78,7 @@ export async function DELETE(
       { status: 500 },
     );
   }
+  
 }
 
 export async function POST(
@@ -142,7 +143,7 @@ export async function POST(
         { status: response.status },
       );
     }
-    console.log(data);
+
     return NextResponse.json({
       success: true,
       ratingResponse: data,

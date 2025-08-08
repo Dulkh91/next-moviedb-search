@@ -2,10 +2,12 @@ export const fetcherMovie = async (url: string) => {
   const response = await fetch(url, {
     headers: { "Content-Type": "application/json" },
   });
+  
+  const data = response.json()
+
   if (!response.ok) {
     const errorInfo = await response.json().catch(() => {});
-    const error = new Error(
-      "An error occurred while fetching the data.",
+    const error = new Error(errorInfo || response.statusText
     ) as Error & {
       info: unknown;
       status: number;
@@ -14,5 +16,5 @@ export const fetcherMovie = async (url: string) => {
     error.status = response.status;
   }
 
-  return response.json();
+  return data;
 };

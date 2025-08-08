@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 
-
 const useGuestSession = () => {
   const [guestId, setGuestId] = useState<string | null>(null);
 
@@ -30,13 +29,11 @@ const useGuestSession = () => {
 
           localStorage.setItem("expire_at", String(expiresAt));
 
-          localStorage.setItem("guest_session_id", data.guest_session_id);
-          setGuestId(data.guest_session_id);
 
-          // if (!saved) {
-          //   localStorage.setItem("guest_session_id", data.guest_session_id);
-          //   setGuestId(data.guest_session_id);
-          // }
+          if (!saved) {
+            localStorage.setItem("guest_session_id", data.guest_session_id);
+            setGuestId(data.guest_session_id);
+          }
         }
       } catch (error) {
         console.error("Failed to create guest session", error);

@@ -50,6 +50,8 @@ export async function GET(req: NextRequest) {
 
   try {
     const response = await fetch(endpointUrl, options);
+    
+     const data = await response.json();
 
     if (!response.ok) {
       return NextResponse.json(
@@ -57,9 +59,13 @@ export async function GET(req: NextRequest) {
         { status: response.status },
       );
     }
-    const data = await response.json();
+   
+    
+    if(data.results && data.results.length === 0){
+      return NextResponse.json({success: true,results:[], message: "No rated movie found"}, {status:404})
+    }
 
-    return NextResponse.json(data);
+    return NextResponse.json(data,{status: 200});
   } catch (error) {
     console.error("Error fetching rated movies:", error);
     return NextResponse.json(

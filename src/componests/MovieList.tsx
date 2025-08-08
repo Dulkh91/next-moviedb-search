@@ -4,7 +4,6 @@ import { Spin, Flex, Alert, FloatButton } from "antd";
 import dynamic from "next/dynamic";
 import { useMovie } from "@/hooks/useMovie";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
-import useGuestSession from "@/hooks/useGuestSession";
 import noImage from "../../public/noImage.svg";
 
 const CardDesktop = dynamic(() => import("@/componests/CardDestop"), {
@@ -15,8 +14,7 @@ const CardMobile = dynamic(() => import("@/componests/CardMobile"), {
 });
 
 const MovieList = () => {
-  useGuestSession();
-
+  
   const search = useSearchParams() as ReadonlyURLSearchParams;
   const page = search.get("page") || "1";
 
