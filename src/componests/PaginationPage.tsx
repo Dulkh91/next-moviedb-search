@@ -26,7 +26,7 @@ const PaginationPage = ({
     <div className="flex justify-center mt-4">
       <Pagination
         total={limitedTotalItems}
-        defaultPageSize={PAGE_SIZE}  
+        defaultPageSize={PAGE_SIZE}
         current={currentPage}
         onChange={onPageChange}
         showSizeChanger={false}

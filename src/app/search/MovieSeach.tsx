@@ -18,8 +18,7 @@ const CardMobile = dynamic(() => import("@/componests/CardMobile"), {
 });
 
 const MovieSearchPage = () => {
-  
-  useGuestSession()
+  useGuestSession();
   const { width } = useWindowSize();
   const [rateStatus, setRateStatus] = useState<boolean>(true);
   const searchParams = useSearchParams() as ReadonlyURLSearchParams;
@@ -31,6 +30,7 @@ const MovieSearchPage = () => {
     page,
     query ? "search" : "discover", //កំណត់ថា type ប្រសិនបើ query មិនបានបញ្ចូលទិន្ន័យផ្ទេទៅ discover
   );
+
 
   if (error) {
     if (error instanceof ApiEror) {
@@ -47,6 +47,7 @@ const MovieSearchPage = () => {
   if (isLoading) {
     return <Skeleton active />;
   }
+
 
   if (error && !data) {
     <Alert message="Failed to load movies" type="error" className="text-lg" />;
